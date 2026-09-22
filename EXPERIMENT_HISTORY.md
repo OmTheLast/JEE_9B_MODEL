@@ -2,6 +2,8 @@
 
 This timeline documents **experiments**, not successive releases of a proven solver. The scores below came from different, small question sets. They should not be compared across rows as if they were one leaderboard. Original questions, answers, review traces, private references and local user interactions are not included in the Hub package.
 
+The [progress graphs](charts/README.md) visualize checkpoint trajectories and the latest answer-versus-procedure tradeoff. The [original local 9B lab](local_lab/README.md) and [Transformers.js browser demo](web/README.md) are both available in this GitHub repository; they run different model sizes and runtimes.
+
 | Stage | What changed | What we learned |
 |---|---|---|
 | Training engineering smoke | Six optimizer updates on image-plus-text repair examples | LoRA updates, loss calculation, checkpointing and restart worked. This was not an accuracy test. |

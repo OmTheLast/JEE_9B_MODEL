@@ -1,0 +1,17 @@
+study,arm,step,correct,total
+First controlled,Unchanged,0,9,12
+First controlled,Adapted,60,11,12
+First controlled,Adapted,120,3,12
+First controlled,Adapted,180,2,12
+Recipe02,Unchanged,0,11,18
+Recipe02,Representation A,30,13,18
+Recipe02,Representation A,60,6,18
+Recipe02,Representation A,90,0,18
+Recipe02,Solution B,30,13,18
+Recipe02,Solution B,60,13,18
+Recipe02,Solution B,90,0,18
+Recipe02,Solution B,120,0,18
+Reliable01,Unchanged,0,7,12
+Reliable01,Adapted,30,7,12
+Reliable01,Adapted,60,7,12
+Reliable01,Adapted,90,7,12

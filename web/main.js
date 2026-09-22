@@ -1,5 +1,5 @@
 import './style.css';
-import { buildSolverPrompt, inspectSolution, MAX_QUESTION_CHARS, suggestSubject } from './harness.js';
+import { buildSolverPrompt, checkRestAccelerationDisplacement, inspectSolution, MAX_QUESTION_CHARS, suggestSubject } from './harness.js';
 
 const $ = (id) => document.getElementById(id);
 const worker = new Worker(new URL('./model.worker.js', import.meta.url), { type: 'module' });
@@ -10,6 +10,7 @@ let selectedFile = null;
 let previewUrl = null;
 let streamed = '';
 let currentAnswerType = 'infer';
+let currentQuestion = '';
 const fileProgress = new Map();
 
 function state(label, kind = '') {
@@ -67,19 +68,22 @@ worker.addEventListener('message', ({ data }) => {
     const raw = data.text || streamed;
     $('raw-output').textContent = raw;
     const check = inspectSolution(raw, currentAnswerType);
+    const calculation = checkRestAccelerationDisplacement(currentQuestion, check.final);
+    const issues = [...check.issues, ...(calculation?.issue ? [calculation.issue] : [])];
     $('final-card').hidden = !check.final;
     $('final-answer').textContent = check.final;
-    $('format-checks').hidden = !check.issues.length;
+    $('format-checks').hidden = !issues.length;
     $('format-checks').replaceChildren();
-    if (check.issues.length) {
+    if (issues.length) {
       const title = document.createElement('strong');
-      title.textContent = 'Review these format signals — they do not grade correctness:';
+      title.textContent = 'Review signals (format and limited browser checks):';
       const list = document.createElement('ul');
-      for (const issue of check.issues) { const item = document.createElement('li'); item.textContent = issue; list.append(item); }
+      for (const issue of issues) { const item = document.createElement('li'); item.textContent = issue; list.append(item); }
       $('format-checks').append(title, list);
     }
-    state(check.formatComplete ? 'Finished · unverified' : 'Review needed', check.formatComplete ? 'active' : 'error');
-    status(`Completed. ${check.formatComplete ? 'The requested sections are present.' : 'Some requested sections are missing.'} Mathematical correctness is not automatically checked.`);
+    const needsReview = !check.formatComplete || issues.length > 0;
+    state(needsReview ? 'Review needed' : 'Finished · unverified', needsReview ? 'error' : 'active');
+    status(calculation?.issue ? 'A narrow independent browser calculation disagrees with the model. Inspect the working.' : `Completed. ${check.formatComplete ? 'The requested sections are present.' : 'Some requested sections are missing.'} Most mathematical steps remain unverified.`);
     refreshControls();
   }
   if (data.type === 'error') showError(data.message);
@@ -131,6 +135,7 @@ $('solve-form').addEventListener('submit', async (event) => {
     prompt = buildSolverPrompt({ question, hasImage: Boolean(selectedFile), subjectHint: $('subject').value, exam: $('exam').value, answerType: $('answer-type').value });
   } catch (error) { return showError(error.message); }
   currentAnswerType = $('answer-type').value;
+  currentQuestion = question;
   const classification = suggestSubject(question, $('subject').value);
   const imageBuffer = selectedFile ? await selectedFile.arrayBuffer() : null;
   streamed = '';

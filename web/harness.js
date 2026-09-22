@@ -41,6 +41,7 @@ export function buildSolverPrompt({ question, hasImage, subjectHint, exam, answe
     'WORK: essential equations and calculations',
     'CHECK: one independent consistency check or a specific limitation',
     'FINAL_ANSWER: the option letters, value with units, or a clear unresolved statement',
+    answerType === 'numeric' ? 'For a numeric answer, write the value and units directly after FINAL_ANSWER; do not prefix it with an option letter.' : '',
     'Question:',
     clean || '[The full question is in the attached image.]',
   ].join('\n');
@@ -49,18 +50,41 @@ export function buildSolverPrompt({ question, hasImage, subjectHint, exam, answe
 export function inspectSolution(raw, answerType = 'infer') {
   const text = String(raw || '').trim();
   const sections = {};
-  const pattern = /^(GIVEN|PLAN|WORK|CHECK|FINAL_ANSWER)\s*:\s*([\s\S]*?)(?=^(?:GIVEN|PLAN|WORK|CHECK|FINAL_ANSWER)\s*:|$(?![\s\S]))/gim;
-  for (const match of text.matchAll(pattern)) sections[match[1].toUpperCase()] = match[2].trim();
-  if (!sections.FINAL_ANSWER) {
-    const last = [...text.matchAll(/^FINAL_ANSWER\s*:\s*(.*)$/gim)].at(-1);
-    if (last) sections.FINAL_ANSWER = last[1].trim();
+  let current = null;
+  for (const line of text.split(/\r?\n/)) {
+    const stripped = line.trim().replace(/^#{1,6}\s*/, '').replace(/^\*\*(.*?)\*\*/, '$1');
+    const match = stripped.match(/^(GIVEN|PLAN|WORK|CHECK|FINAL_ANSWER)(?:\s*:\s*(.*))?$/i);
+    if (match) {
+      current = match[1].toUpperCase();
+      sections[current] = (match[2] || '').trim();
+    } else if (current) {
+      sections[current] += `${sections[current] ? '\n' : ''}${line}`;
+    }
   }
-  const final = sections.FINAL_ANSWER || '';
+  for (const key of Object.keys(sections)) sections[key] = sections[key].trim();
+  const final = (sections.FINAL_ANSWER || '').replace(/^\*\*([\s\S]*?)\*\*$/, '$1').trim();
   const issues = [];
   if (!final) issues.push('No FINAL_ANSWER line. Generation may have stopped before committing an answer.');
   if (!sections.PLAN) issues.push('No explicit decomposition plan was produced.');
   if (!sections.CHECK) issues.push('No consistency check was produced.');
   if (final && answerType === 'numeric' && !/[+-]?\d/.test(final) && !/unresolved|cannot|unclear/i.test(final)) issues.push('The final line does not appear to contain a number.');
+  if (final && answerType === 'numeric' && /^[A-D]\s*:/i.test(final)) issues.push('The numeric final line has an option-style prefix; inspect the intended answer.');
   if (final && answerType === 'multiple' && /^[A-D]$/i.test(final)) issues.push('Only one option was listed for a multiple-correct question; inspect it.');
   return { final, sections, issues, formatComplete: Boolean(final && sections.PLAN && sections.CHECK) };
+}
+
+// This is deliberately a narrow independent calculation, not a general answer grader.
+export function checkRestAccelerationDisplacement(question, final) {
+  const q = String(question || '');
+  if (!/\b(starts? from rest|initial velocity (?:is|of) (?:zero|0))\b/i.test(q)) return null;
+  if (!/\bconstant acceleration\b/i.test(q) || !/\bdisplacement\b/i.test(q)) return null;
+  const acceleration = q.match(/\bacceleration\s+(?:of\s+)?([+]?[0-9]+(?:\.[0-9]+)?)\s*m\s*\/\s*s\s*(?:²|\^\s*2|2)/i);
+  const time = q.match(/\b(?:first|for|after)\s+([0-9]+(?:\.[0-9]+)?)\s*(?:s|seconds?)\b/i);
+  const answer = String(final || '').match(/(?:^|\s|:)\s*([+-]?[0-9]+(?:\.[0-9]+)?)/);
+  if (!acceleration || !time || !answer) return null;
+  const expected = 0.5 * Number(acceleration[1]) * Number(time[1]) ** 2;
+  const observed = Number(answer[1]);
+  if (!Number.isFinite(expected) || !Number.isFinite(observed)) return null;
+  const agrees = Math.abs(observed - expected) <= Math.max(1e-6, Math.abs(expected) * 0.01);
+  return { expected, observed, agrees, issue: agrees ? '' : `Independent constant-acceleration check gives ${expected} m, while the model's final number is ${observed}. Check the displacement formula.` };
 }

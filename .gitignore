@@ -1,0 +1,6 @@
+.venv/
+__pycache__/
+.DS_Store
+web/.smoke/
+web/node_modules/
+web/dist/

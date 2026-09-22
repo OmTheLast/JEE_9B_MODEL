@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JEE model lab</title>
+<style>
+  :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172523;background:#f1f4f1}
+  *{box-sizing:border-box} body{margin:0} main{max-width:1150px;margin:auto;padding:24px 20px 80px}
+  header{background:#12342e;color:#fff;padding:35px 20px 31px} header>div{max-width:1110px;margin:auto}
+  h1{font-size:clamp(32px,4vw,49px);line-height:1.04;margin:0 0 10px;letter-spacing:-.045em}
+  header p{max-width:740px;color:#d3e6df;font-size:16px;line-height:1.5;margin:0}
+  .eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.16em;color:#91e3c2;font-weight:800;margin-bottom:10px}
+  .grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(330px,.85fr);gap:20px;align-items:start}
+  .panel{background:#fff;border:1px solid #d5dfda;border-radius:17px;padding:22px;box-shadow:0 8px 28px #19352a09}
+  h2{font-size:19px;margin:0 0 18px;letter-spacing:-.02em} h3{font-size:15px;margin:22px 0 10px}
+  label{font-size:13px;color:#3c514a;font-weight:700;display:block;margin:0 0 7px}
+  textarea,select,input[type=file]{width:100%;border:1px solid #c6d4cb;border-radius:10px;padding:11px 12px;font:inherit;background:#fbfdfb;color:#172523}
+  textarea{min-height:220px;resize:vertical;line-height:1.45} textarea:focus,select:focus{outline:3px solid #b9e9cd;border-color:#32745b}
+  .fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:16px 0}
+  .hint{font-size:12px;color:#5b7068;line-height:1.5;margin-top:6px}
+  button{font:inherit;font-weight:750;border:0;border-radius:10px;cursor:pointer}
+  #solve{padding:13px 20px;background:#176349;color:#fff;min-width:170px} #solve:hover{background:#0d4b36} #solve:disabled{opacity:.55;cursor:wait}
+  #status{font-size:13px;font-weight:700;color:#4d6258;margin-left:10px}
+  .row{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+  .output{white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.56 ui-monospace,SFMono-Regular,Menlo,monospace;max-height:700px;overflow:auto;background:#10221f;color:#e9fff1;padding:18px;border-radius:12px;min-height:250px;margin:0}
+  .result{background:#e8f3eb;border:1px solid #c6dfcf;border-radius:10px;padding:11px 13px;font-size:13px;line-height:1.5;margin:0 0 14px;white-space:pre-wrap;overflow-wrap:anywhere}
+  .notice{font-size:13px;line-height:1.55;color:#536a60;border-left:3px solid #b9d7c4;padding-left:13px;margin:18px 0 0}
+  .connection{background:#fff2d5;border:1px solid #e4c579;border-radius:12px;color:#604715;padding:14px 17px;margin:0 0 20px;line-height:1.5}
+  .connection a{color:#175d45;font-weight:750}.connection code{font-size:12px;overflow-wrap:anywhere}
+  .history{margin-top:20px}.history-list{display:grid;gap:8px}.history button{text-align:left;padding:11px 12px;background:#f4f8f5;border:1px solid #d8e4db;width:100%;color:#223d32;font-weight:500}
+  .history button:hover{background:#e9f3ec}.history small{display:block;color:#627a6b;margin-top:3px}
+  .tag{display:inline-block;background:#dceee2;color:#1e6240;padding:3px 7px;border-radius:7px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
+  @media(max-width:850px){.grid{grid-template-columns:1fr}.fields{grid-template-columns:1fr 1fr}}
+  @media(max-width:530px){main{padding:15px 12px 60px}.panel{padding:17px}.fields{grid-template-columns:1fr}header{padding:29px 18px}}
+</style>
+</head>
+<body>
+<header><div><div class="eyebrow">Local exploratory workspace</div><h1>JEE model lab</h1><p>Submit a question and watch the pinned Qwen3.5-9B model answer. Compare the unchanged base with saved experimental adapters. Each attempt is recorded locally so you can inspect it later.</p></div></header>
+<main>
+  <div id="connection" class="connection" hidden><strong>This page needs its local model server.</strong> Opening the HTML file directly cannot send a question to the model. <a href="http://127.0.0.1:8766/">Open the working JEE lab</a>. If that link does not load, start it from this repository with <code>.venv/bin/python local_lab/start.py</code>.</div>
+  <div class="grid">
+    <section class="panel">
+      <h2>Ask a question</h2>
+      <label for="question">Question text, options and given values</label>
+      <textarea id="question" placeholder="Paste a JEE Main or Advanced problem here. You can also attach an image of the complete question."></textarea>
+      <div style="margin-top:15px"><label for="image">Question image (optional)</label><input id="image" type="file" accept="image/png,image/jpeg"><div class="hint">Use a clear PNG or JPEG. The image is resized locally if needed.</div></div>
+      <div class="fields">
+        <div><label for="model">Model</label><select id="model"><option value="base">Unchanged base · recommended</option><option value="reliable01-step60">30 families · 3 layers · step 60</option><option value="coverage16-step60">30 families · 16 layers · step 60</option><option value="data60-step60">60 families · 3 layers · step 60</option></select><div class="hint">A family is one source problem and its related exercises. Layers are the model blocks given LoRA updates. All adapters here are experimental.</div></div>
+        <div><label for="subject">Subject hint</label><select id="subject"><option value="auto">Let model decide</option><option value="mathematics">Mathematics</option><option value="physics">Physics</option><option value="chemistry">Chemistry</option></select></div>
+        <div><label for="exam">Exam</label><select id="exam"><option value="auto">Unspecified</option><option value="main">JEE Main</option><option value="advanced">JEE Advanced</option></select></div>
+        <div><label for="answer_type">Expected answer</label><select id="answer_type"><option value="auto">Let model decide</option><option value="options">Option label(s)</option><option value="numeric">Numeric</option></select></div>
+        <div><label for="max_tokens">Output budget</label><select id="max_tokens"><option value="2048">2,048 tokens</option><option value="512">512 tokens</option><option value="1024">1,024 tokens</option><option value="4096">4,096 tokens</option></select></div>
+      </div>
+      <div class="row"><button id="solve">Solve question</button><span id="status">Ready</span></div>
+      <p class="notice">This is an exploratory interface. A parseable final answer means the format is valid; it does not mean the mathematics or science is correct. Experimental adapters have not been selected as improved solvers. Runs here are kept out of training and benchmark folders.</p>
+    </section>
+    <section class="panel">
+      <h2>Live model output</h2>
+      <div id="result" class="result">No attempt yet. The answer and its final-answer check will appear here.</div>
+      <pre id="output" class="output">Waiting for a question…</pre>
+      <div class="history"><h3>Saved attempts</h3><div id="history" class="history-list"></div></div>
+    </section>
+  </div>
+</main>
+<script>
+const $ = id => document.getElementById(id);
+const status = value => { $('status').textContent = value; };
+function showResult(value){ $('result').textContent = value; }
+async function fileData(file){
+  if(!file) return '';
+  return await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(new Error('Could not read image'));reader.readAsDataURL(file);});
+}
+async function refreshHistory(){
+  try{
+    const rows=await (await fetch('/api/runs')).json();const box=$('history');box.replaceChildren();
+    if(!rows.length){const empty=document.createElement('div');empty.className='hint';empty.textContent='No saved attempts yet.';box.append(empty);return;}
+    for(const row of rows){
+      const button=document.createElement('button');const title=document.createElement('span');const meta=document.createElement('small');
+      title.textContent=row.question || 'Image-only question';meta.textContent=`${new Date(row.created_unix*1000).toLocaleString()} · ${row.model} · ${row.status}`;
+      button.append(title,meta);button.addEventListener('click',()=>loadRun(row.id));box.append(button);
+    }
+  }catch(error){$('history').textContent='Could not load saved attempts. The local model server may have stopped.';}
+}
+async function loadRun(id){
+  const response=await fetch('/api/runs/'+encodeURIComponent(id));if(!response.ok) return;
+  const row=await response.json();$('question').value=row.request.question||'';$('model').value=row.request.model;
+  $('subject').value=row.request.subject;$('exam').value=row.request.exam;$('answer_type').value=row.request.answer_type;
+  $('max_tokens').value=row.request.max_tokens;
+  const result=row.result;const progress=row.inprogress;const halt=row.halted;
+  $('output').textContent=result?.text ?? progress?.text ?? halt?.partial_text ?? '(No saved output yet)';
+  showResult(result?`Saved run ${id}\nStatus: ${result.status}; final check: ${result.final_answer.status}; ${result.generation_tokens??'?'} tokens; ${result.elapsed_seconds.toFixed(1)} seconds`:
+    halt?`Saved run ${id} halted: ${halt.error||halt.error_type}`:`Saved run ${id} is incomplete. Latest streamed checkpoint shown.`);
+  status('Viewing saved attempt');
+}
+async function solve(){
+  const button=$('solve');button.disabled=true;status('Preparing request…');$('output').textContent='';showResult('Starting local model…');
+  try{
+    const payload={question:$('question').value,image:await fileData($('image').files[0]),model:$('model').value,subject:$('subject').value,exam:$('exam').value,answer_type:$('answer_type').value,max_tokens:Number($('max_tokens').value)};
+    const response=await fetch('/api/solve',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    if(!response.ok){const body=await response.json();throw new Error(body.error||`HTTP ${response.status}`);}
+    status('Model running…');const reader=response.body.getReader();const decoder=new TextDecoder();let pending='';let runId='';
+    while(true){const {value,done}=await reader.read();if(done)break;pending+=decoder.decode(value,{stream:true});let cut;
+      while((cut=pending.indexOf('\n'))>=0){const line=pending.slice(0,cut);pending=pending.slice(cut+1);if(!line.trim())continue;
+        const event=JSON.parse(line);
+        if(event.type==='accepted'){runId=event.run_id;showResult('Saved attempt: '+runId+'\nLoading model…');}
+        else if(event.type==='ready'){status('Generating answer…');}
+        else if(event.type==='delta'){$('output').textContent+=event.text;$('output').scrollTop=$('output').scrollHeight;}
+        else if(event.type==='done'){const r=event.result;status(r.status==='timeout'?'Timed out':r.finish_reason==='length'?'Token limit reached':'Completed');showResult(`Saved attempt: ${runId}\nFinal-answer check: ${r.final_answer.status}\nTokens: ${r.generation_tokens??'?'} · Stop: ${r.finish_reason??r.status} · Time: ${r.elapsed_seconds.toFixed(1)} seconds`);}
+        else if(event.type==='error'){status('Run halted');showResult('Saved attempt: '+runId+'\n'+event.message);}
+      }
+    }
+    await refreshHistory();
+  }catch(error){status('Unable to run');showResult(error instanceof TypeError && /fetch/i.test(error.message)?'Could not reach the local model server. Open http://127.0.0.1:8766/ and restart the server if needed.':error.message);}finally{button.disabled=false;}
+}
+if(location.protocol==='file:'){
+  $('connection').hidden=false;$('solve').disabled=true;status('Open via local server');
+  showResult('This HTML file is the interface only. Use the working link above; a file:// page cannot reach the model API.');
+  $('history').textContent='Saved attempts appear in the server-hosted page.';
+}else{
+  $('solve').addEventListener('click',solve);refreshHistory();
+}
+</script>
+</body>
+</html>
