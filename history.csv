@@ -1,0 +1,7 @@
+condition,training_families,last_language_layers,step,strict_correct_of_12,procedure_points_of_24,token_caps,selected
+base,0,0,0,7,17,5,False
+reliable01-step030,30,3,30,7,16,4,False
+reliable01-step060,30,3,60,7,18,5,False
+reliable01-step090,30,3,90,7,17,5,False
+coverage16-step060,30,16,60,8,14,2,False
+data60-step060,60,3,60,7,16,5,False

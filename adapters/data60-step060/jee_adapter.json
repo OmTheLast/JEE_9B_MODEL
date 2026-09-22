@@ -1,0 +1,12 @@
+{
+  "format": "mlx-vlm-project-specific-lora",
+  "last_language_layers": 3,
+  "mlp_projections": [
+    "gate_proj",
+    "up_proj",
+    "down_proj"
+  ],
+  "rank": 4,
+  "scale": 2.0,
+  "dropout": 0.0
+}

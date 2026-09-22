@@ -1,0 +1,52 @@
+{
+  "status": "experimental_no_checkpoint_selected",
+  "built_utc": "2026-09-22T13:22:27.754575+00:00",
+  "base": {
+    "repo": "mlx-community/Qwen3.5-9B-4bit",
+    "revision": "8b2b98c00a6b4d291155e4890773ca8f769aee53",
+    "license": "apache-2.0"
+  },
+  "adapters": {
+    "reliable01-step030": {
+      "experiment": "reliable01/experiment01",
+      "step": 30,
+      "training_families": 30,
+      "last_language_layers": 3,
+      "sha256": "63ae0624e34dcfe6813b31b0359358f0a8c1d26ecbb866911bf98469e42457b5",
+      "selected": false
+    },
+    "reliable01-step060": {
+      "experiment": "reliable01/experiment01",
+      "step": 60,
+      "training_families": 30,
+      "last_language_layers": 3,
+      "sha256": "c1fb672774b993cc8f3a0b86c678760105484a0bbd7ef2e116f982c7c272d481",
+      "selected": false
+    },
+    "reliable01-step090": {
+      "experiment": "reliable01/experiment01",
+      "step": 90,
+      "training_families": 30,
+      "last_language_layers": 3,
+      "sha256": "adf088b169aba6ef34995982e6fe877ad635c46a3c5f36ded2bffcd4b0a7285f",
+      "selected": false
+    },
+    "coverage16-step060": {
+      "experiment": "reliable02/coverage01",
+      "step": 60,
+      "training_families": 30,
+      "last_language_layers": 16,
+      "sha256": "2f7fc84f9f1755b3840d32150dbbcc6e4c4c88ecfdfbbb15f44496370594c786",
+      "selected": false
+    },
+    "data60-step060": {
+      "experiment": "reliable02/data01",
+      "step": 60,
+      "training_families": 60,
+      "last_language_layers": 3,
+      "sha256": "8d4f0f54a73d15dfbef40ffafceee8b7230b1b9175c16ea23e3305f34dc39593",
+      "selected": false
+    }
+  },
+  "evaluation": "Validation01 development only; 12 questions; Eval01/2026 not used"
+}
