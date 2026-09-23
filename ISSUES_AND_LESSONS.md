@@ -15,3 +15,5 @@ This is a public summary of the JEE project record. It distinguishes measured fa
 | **Operating and recovery limits** | A directly opened `file://` lab page could not reach a stopped local server. Training can be interrupted by a shutdown. | The local lab must run through its loopback server; training saves durable per-update recovery state. A local checkpoint is not an off-device backup. |
 
 The current research decision is **no promoted adapted checkpoint**. The next learning question is whether better, shorter execution-and-repair targets and a common verification harness improve both reasoning and answer delivery on *new* independent questions. The protected 2026 final reservation has not been used to rescue an unsuccessful checkpoint.
+
+The full [9B training retrospective](TRAINING_RETROSPECTIVE.md) separates measured contributors from unresolved hypotheses and records the safeguards for the approximately 4B track.

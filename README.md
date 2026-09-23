@@ -33,7 +33,7 @@ The original lab is a format-checking exploratory interface, not yet a full calc
 
 The first graph keeps separate validation slices in separate panels. The second compares exact answers **and** procedure quality on the same latest 12-question development slice. Read the [chart notes and source data](charts/README.md) before interpreting the bars as progress.
 
-For the main problems encountered while building and testing this system, read [Issues and lessons](ISSUES_AND_LESSONS.md).
+For the main problems encountered while building and testing this system, read [Issues and lessons](ISSUES_AND_LESSONS.md). The longer [9B training retrospective](TRAINING_RETROSPECTIVE.md) explains why some adapters regressed, which explanations are measured versus hypothetical, and the safeguards being carried into the approximately 4B program.
 
 ## Development history
 
@@ -59,6 +59,7 @@ Earlier pilot and learning probes led to this controlled series but used differe
 - `release.json` and `SHA256SUMS`: pinned base revision and file hashes.
 - `history.csv`: the table above in machine-readable form.
 - `EXPERIMENT_HISTORY.md`: earlier experiment chronology and reasons we did not treat local selections as a finished solver.
+- `TRAINING_RETROSPECTIVE.md`: measured causes, design mistakes and safeguards from the 9B program.
 - `local_lab/`: runnable local 9B streaming interface with private on-disk attempt history.
 - `web/` and `docs/`: Transformers.js browser source and built GitHub Pages preview.
 - `charts/`: source-labelled progress charts, data and rebuild script.
