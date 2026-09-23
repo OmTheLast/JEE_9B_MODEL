@@ -43,6 +43,10 @@ The [9B portability experiment](research/EXPORT09B01_STAGE_B_RESULT.md) successf
 
 The first browser product should use its solver model's integrated vision. A second small visual model remains a [three-condition hybrid ablation](research/VISION_FRONTEND_ABLATION.md), because OCR help must outweigh extra memory/latency and the risk of losing diagram relations.
 
+The first unchanged-model screen and matched 24-question development pilot are now complete. [Qwen3.5-4B remains a conditional survivor](research/SMALL_MODEL_SELECTION_RESULT.md): it scored 13/24 against the unchanged 9B control's 15/24, but failed Chemistry Advanced and completion gates. LFM2.5-VL-3B and Qwen3-VL-4B-Thinking failed the six-item screen; Gemma3n E4B remains access-gated.
+
+A follow-up [completion-control experiment](research/COMPLETION_CONTROL_RESULT.md) showed why the raw scores understate usable work. Another natural-language request for a short final failed. A forced answer serializer plus deterministic format normalization recovered supported answers without changing weights, producing provisional trigger-only effective scores of 15/24 for 4B and 19/24 for 9B. This is a harness gain on reused development data, not training or benchmark evidence. It motivates separate solve, verify and commit states before the next adapter run.
+
 ## Development history
 
 All rows below used the same **12-question Validation01 development slice** with the same inference settings: seed 0, temperature 0, 4,096 output-token cap and 240-second deadline. It was used to inspect and select checkpoints; repeated use makes it unsuitable as independent evidence of general JEE performance. Procedure points are coordinator ratings (valid=2, partial=1, invalid=0), not external expert certification. A cap is an output stopped by the 4,096-token budget. Scores are strict final answers.

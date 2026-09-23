@@ -1,0 +1,4 @@
+condition,qwen35_4b_correct,qwen35_9b_correct,total
+raw_single_pass,13,15,24
+natural_language_controller,13,15,24
+forced_serializer_and_normalizer,15,19,24

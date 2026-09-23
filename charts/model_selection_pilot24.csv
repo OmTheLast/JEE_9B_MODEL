@@ -1,0 +1,15 @@
+cell,condition,correct,total,parseable,caps
+overall,qwen35-4b,13,24,14,11
+overall,qwen35-9b-control,15,24,16,8
+chemistry/advanced,qwen35-4b,0,4,1,4
+chemistry/advanced,qwen35-9b-control,3,4,3,1
+chemistry/main,qwen35-4b,3,4,3,1
+chemistry/main,qwen35-9b-control,3,4,3,1
+mathematics/advanced,qwen35-4b,2,4,2,2
+mathematics/advanced,qwen35-9b-control,2,4,2,2
+mathematics/main,qwen35-4b,3,4,3,1
+mathematics/main,qwen35-9b-control,3,4,3,1
+physics/advanced,qwen35-4b,2,4,2,2
+physics/advanced,qwen35-9b-control,2,4,2,2
+physics/main,qwen35-4b,3,4,3,1
+physics/main,qwen35-9b-control,2,4,3,1
