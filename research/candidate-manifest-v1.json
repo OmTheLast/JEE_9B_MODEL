@@ -1,0 +1,127 @@
+{
+  "status": "runtime_screen_not_benchmark_result",
+  "checked_date": "2026-09-23",
+  "primary_candidates": [
+    {
+      "name": "Qwen3.5-4B",
+      "role": "architecture-continuity candidate",
+      "upstream": {
+        "repo": "Qwen/Qwen3.5-4B",
+        "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+        "license": "apache-2.0",
+        "gated": false,
+        "weight_bytes_reported_by_hub": 9329828096
+      },
+      "mlx": {
+        "repo": "mlx-community/Qwen3.5-4B-4bit",
+        "revision": "0e7ffd5c629ef7719d4cbc04069232580bfa9d9c",
+        "weight_bytes_reported_by_hub": 3034300695
+      },
+      "onnx": {
+        "repo": "onnx-community/Qwen3.5-4B-ONNX",
+        "revision": "74d8caba2117fd5f41d655e9cc27eda1338662b3",
+        "transformers_js_architecture_supported": true,
+        "clean_browser_smoke": "pending",
+        "note": "Repository contains multiple precision variants; full repository size is not the browser download size. Measure the selected files and peak memory."
+      },
+      "multimodal": true,
+      "license_gate": "passed",
+      "open_risks": [
+        "No JEE pilot score yet.",
+        "An open Transformers.js issue reports slow Qwen3.5-4B WebGPU prefill/decode on one setup; reproduce locally.",
+                "MLX-to-PEFT native parity passed on a 9B format fixture, but current public Qwen3.5 Optimum/Transformers.js exporter code is unavailable; trained-weight ONNX reproducibility remains blocked."
+      ]
+    },
+    {
+      "name": "Gemma-3n-E4B-it",
+      "role": "device-oriented quality candidate",
+      "upstream": {
+        "repo": "google/gemma-3n-E4B-it",
+        "revision": "c1221e9c62e34a43ab7ffacd1be0ea71f126ef10",
+        "license": "gemma",
+        "gated": "manual acceptance required",
+        "weight_bytes_reported_by_hub": 15700681712,
+        "parameter_note": "Approximately 8B total parameters with E4B effective activation/memory behavior; not a literal 4B checkpoint."
+      },
+      "mlx": {
+        "repo": "mlx-community/gemma-3n-E4B-it-4bit",
+        "revision": "505468a22e5703ff090e222aae9beedec49b383f",
+        "weight_bytes_reported_by_hub": 5819058553
+      },
+      "onnx": {
+        "repo": "onnx-community/gemma-3n-E4B-it-ONNX",
+        "access_check": "HTTP 401 without accepted Gemma access",
+        "transformers_js_architecture_supported": true,
+        "clean_browser_smoke": "pending"
+      },
+      "multimodal": true,
+      "license_gate": "pending terms review and account acceptance",
+      "open_risks": [
+        "Current MLX-VLM LoRA documentation excludes Gemma3n, so training may require PyTorch/PEFT.",
+        "Actual parameter/storage footprint is closer to 8B even though active memory is advertised as E4B.",
+        "No JEE pilot score or browser measurement yet."
+      ]
+    },
+    {
+      "name": "LFM2.5-VL-3B",
+      "role": "deployment-first candidate",
+      "upstream": {
+        "repo": "LiquidAI/LFM2.5-VL-3B",
+        "revision": "a3af5799199acdd2a4f56ac4342816abb46c12a9",
+        "license": "lfm1.0",
+        "gated": false,
+        "weight_bytes_reported_by_hub": 6247065472
+      },
+      "mlx": {
+        "repo": "LiquidAI/LFM2.5-VL-3B-MLX-8bit",
+        "revision": "8ae3db8899ed2ef7d9a0ffc52f68c4a88fbe6585",
+        "weight_bytes_reported_by_hub": 3718720809
+      },
+      "onnx": {
+        "repo": "LiquidAI/LFM2.5-VL-3B-ONNX",
+        "revision": "020f9311343b8f3c6d9789b4dd300e749ec52cd1",
+        "transformers_js_architecture_supported": true,
+        "clean_browser_smoke": "pending"
+      },
+      "multimodal": true,
+      "license_gate": "pending legal/redistribution review of LFM 1.0",
+      "open_risks": [
+        "Liquid AI recommends the model for fast single-turn work and says it is not recommended for reasoning-intensive technical questions.",
+        "No JEE pilot score yet.",
+        "Trainability and adapter export through the exact local stack need a one-update preflight."
+      ]
+    }
+  ],
+  "challengers": [
+    {
+      "name": "Qwen3-VL-4B-Thinking",
+      "repo": "Qwen/Qwen3-VL-4B-Thinking",
+      "license": "apache-2.0",
+      "purpose": "Reasoning-oriented native/server challenger in the smoke screen.",
+      "limit": "No confirmed matching Transformers.js ONNX Thinking build in this review; do not advance to product finalist without one."
+    },
+    {
+      "name": "Phi-4-multimodal-instruct",
+      "repo": "microsoft/Phi-4-multimodal-instruct",
+      "license": "mit",
+      "purpose": "Optional server-side challenger if the primary candidates fail the reasoning gate.",
+      "limit": "Larger/custom-code model and no confirmed direct Transformers.js route; not a first browser finalist."
+    }
+  ],
+  "visual_frontend_candidates": [
+    {
+      "name": "LFM2.5-VL-450M",
+      "repo": "LiquidAI/LFM2.5-VL-450M-ONNX",
+      "license": "lfm1.0",
+      "documented_browser_variant": "FP16 vision encoder plus Q4 decoder, approximately 770MB",
+      "purpose": "First structured transcription/OCR frontend candidate; never the sole source of truth without ablation evidence."
+    },
+    {
+      "name": "SmolVLM2-500M or 2.2B",
+      "repo": "HuggingFaceTB/SmolVLM2-500M-Video-Instruct",
+      "license": "apache-2.0",
+      "purpose": "Fallback comparison if LFM450M transcription loses critical JEE symbols or relations.",
+      "limit": "Exact current browser artifact and equation/diagram fidelity must be verified before use."
+    }
+  ]
+}

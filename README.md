@@ -35,6 +35,14 @@ The first graph keeps separate validation slices in separate panels. The second 
 
 For the main problems encountered while building and testing this system, read [Issues and lessons](ISSUES_AND_LESSONS.md). The longer [9B training retrospective](TRAINING_RETROSPECTIVE.md) explains why some adapters regressed, which explanations are measured versus hypothetical, and the safeguards being carried into the approximately 4B program.
 
+## Current 4B-class model selection and export work
+
+The next model is not being chosen by parameter label or one accuracy number. The [staged selection plan](research/MODEL_SELECTION_4B_PLAN.md) screens Qwen3.5-4B, Gemma3n E4B-it and LFM2.5-VL-3B, with narrowly chosen challengers, on reasoning, procedure, image fidelity, completion, memory, latency, licensing, trainability and a reproducible trained-weight browser path. Exact model revisions are recorded in the [candidate manifest](research/candidate-manifest-v1.json).
+
+The [9B portability experiment](research/EXPORT09B01_STAGE_B_RESULT.md) successfully mapped an MLX adapter to PEFT and verified native text/image behavior. It then stopped honestly: current public Qwen3.5 tooling can run community ONNX builds but does not expose a reproducible exporter for our trained weights. No 9B browser model is claimed. The representation converter is retained in [`conversion_lab/`](conversion_lab/README.md).
+
+The first browser product should use its solver model's integrated vision. A second small visual model remains a [three-condition hybrid ablation](research/VISION_FRONTEND_ABLATION.md), because OCR help must outweigh extra memory/latency and the risk of losing diagram relations.
+
 ## Development history
 
 All rows below used the same **12-question Validation01 development slice** with the same inference settings: seed 0, temperature 0, 4,096 output-token cap and 240-second deadline. It was used to inspect and select checkpoints; repeated use makes it unsuitable as independent evidence of general JEE performance. Procedure points are coordinator ratings (valid=2, partial=1, invalid=0), not external expert certification. A cap is an output stopped by the 4,096-token budget. Scores are strict final answers.
@@ -60,6 +68,8 @@ Earlier pilot and learning probes led to this controlled series but used differe
 - `history.csv`: the table above in machine-readable form.
 - `EXPERIMENT_HISTORY.md`: earlier experiment chronology and reasons we did not treat local selections as a finished solver.
 - `TRAINING_RETROSPECTIVE.md`: measured causes, design mistakes and safeguards from the 9B program.
+- `research/`: 4B-class model-selection plan, visual-frontend ablation and 9B portability result.
+- `conversion_lab/`: MLX-LoRA-to-PEFT representation converter and scope notes.
 - `local_lab/`: runnable local 9B streaming interface with private on-disk attempt history.
 - `web/` and `docs/`: Transformers.js browser source and built GitHub Pages preview.
 - `charts/`: source-labelled progress charts, data and rebuild script.
