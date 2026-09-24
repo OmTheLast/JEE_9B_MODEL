@@ -51,6 +51,8 @@ The 4B program is now explicitly [locked behind no-regression gates](research/TR
 
 The first [solve→verify→commit diagnostic](research/VERIFICATION_DIAGNOSTICS_RESULT.md) found a useful boundary. Atomic one-claim calls produced 24/24 parseable, uncapped checks across unchanged 4B and 9B, but only 1/12 and 3/12 decisive chemistry facts were coordinator-correct on three deliberately difficult reused questions. Atomic checking is therefore a stopping/format primitive, not a correctness oracle. The [harness contract](research/HARNESS_STATE_MACHINE_V1.md) now keeps independent checks separate from the solver answer and routes unresolved science to abstention or trusted evidence.
 
+The first [4B curriculum tranche](research/FIRST_4B_CURRICULUM_TRANCHE.md) is now prepared: 60 independent balanced families produce 180 linked atomic-check, method-plan and solve/commit views. Coordinator contract review and Qwen3.5-4B image/token/mask checks passed, with every view below 1,036 tokens. No 4B optimizer update has run; private questions and answers are excluded from this repository. Independent expert review and expansion toward 300 families remain before a training release.
+
 ## Development history
 
 All rows below used the same **12-question Validation01 development slice** with the same inference settings: seed 0, temperature 0, 4,096 output-token cap and 240-second deadline. It was used to inspect and select checkpoints; repeated use makes it unsuitable as independent evidence of general JEE performance. Procedure points are coordinator ratings (valid=2, partial=1, invalid=0), not external expert certification. A cap is an output stopped by the 4,096-token budget. Scores are strict final answers.
