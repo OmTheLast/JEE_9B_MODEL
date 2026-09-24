@@ -47,6 +47,10 @@ The first unchanged-model screen and matched 24-question development pilot are n
 
 A follow-up [completion-control experiment](research/COMPLETION_CONTROL_RESULT.md) showed why the raw scores understate usable work. Another natural-language request for a short final failed. A forced answer serializer plus deterministic format normalization recovered supported answers without changing weights, producing provisional trigger-only effective scores of 15/24 for 4B and 19/24 for 9B. This is a harness gain on reused development data, not training or benchmark evidence. It motivates separate solve, verify and commit states before the next adapter run.
 
+The 4B program is now explicitly [locked behind no-regression gates](research/TRAINING_SAFETY_GATES_V1.md). The unchanged base remains immutable; experimental adapters cannot replace it unless they preserve every canary, avoid cell/procedure/output regressions, improve on development under a frozen rule and then pass a fresh 120-family confirmation plus export parity. No 4B optimizer update has been authorized.
+
+The first [solve→verify→commit diagnostic](research/VERIFICATION_DIAGNOSTICS_RESULT.md) found a useful boundary. Atomic one-claim calls produced 24/24 parseable, uncapped checks across unchanged 4B and 9B, but only 1/12 and 3/12 decisive chemistry facts were coordinator-correct on three deliberately difficult reused questions. Atomic checking is therefore a stopping/format primitive, not a correctness oracle. The [harness contract](research/HARNESS_STATE_MACHINE_V1.md) now keeps independent checks separate from the solver answer and routes unresolved science to abstention or trusted evidence.
+
 ## Development history
 
 All rows below used the same **12-question Validation01 development slice** with the same inference settings: seed 0, temperature 0, 4,096 output-token cap and 240-second deadline. It was used to inspect and select checkpoints; repeated use makes it unsuitable as independent evidence of general JEE performance. Procedure points are coordinator ratings (valid=2, partial=1, invalid=0), not external expert certification. A cap is an output stopped by the 4,096-token budget. Scores are strict final answers.
@@ -72,7 +76,7 @@ Earlier pilot and learning probes led to this controlled series but used differe
 - `history.csv`: the table above in machine-readable form.
 - `EXPERIMENT_HISTORY.md`: earlier experiment chronology and reasons we did not treat local selections as a finished solver.
 - `TRAINING_RETROSPECTIVE.md`: measured causes, design mistakes and safeguards from the 9B program.
-- `research/`: 4B-class model-selection plan, visual-frontend ablation and 9B portability result.
+- `research/`: 4B-class model selection, no-regression gates, solve/verify/commit diagnostics, visual-frontend ablation and 9B portability result.
 - `conversion_lab/`: MLX-LoRA-to-PEFT representation converter and scope notes.
 - `local_lab/`: runnable local 9B streaming interface with private on-disk attempt history.
 - `web/` and `docs/`: Transformers.js browser source and built GitHub Pages preview.
