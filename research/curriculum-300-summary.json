@@ -1,0 +1,39 @@
+{
+  "version": "public-4b-curriculum-300-family-milestone-v1",
+  "date": "2026-09-26",
+  "status": "coordinator_reviewed_candidate_expert_pending",
+  "training_ready": false,
+  "independent_families": 300,
+  "linked_views": 900,
+  "views_by_type": {
+    "atomic_verify": 300,
+    "compose_method": 300,
+    "solve_commit": 300
+  },
+  "families_per_subject_exam_cell": 50,
+  "atomic_verdicts": {
+    "pass": 150,
+    "fail": 150
+  },
+  "expansion_source_records_reviewed": 247,
+  "rejected_source_records": 7,
+  "same_stratum_replacements": 7,
+  "processor": {
+    "views": 900,
+    "total_token_range": [
+      201,
+      1220
+    ],
+    "assistant_token_range": [
+      47,
+      646
+    ],
+    "views_over_2048": 0
+  },
+  "optimizer_updates": 0,
+  "limits": [
+    "Private questions, images, answers and reviewer evidence are excluded.",
+    "This is not an expert-certified training release.",
+    "Technical checks do not establish solver improvement."
+  ]
+}
