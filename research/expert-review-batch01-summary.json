@@ -1,0 +1,29 @@
+{
+  "version": "expert-review-batch01-public-summary-v1",
+  "date": "2026-09-27",
+  "status": "model_review_complete_human_subject_expert_pending",
+  "risk_register": {
+    "families": 300,
+    "high": 102,
+    "medium": 116,
+    "low": 82
+  },
+  "batch": {
+    "families": 12,
+    "candidate_supported_by_both": 10,
+    "candidate_corrections_required": 1,
+    "reviewer_disagreement_holds": 1,
+    "human_subject_expert_pending": 12,
+    "training_ready": 0
+  },
+  "post_correction": {
+    "independent_families": 300,
+    "linked_views": 900,
+    "corrected_component_views": 36,
+    "corrected_component_token_range": [255, 982],
+    "candidate_index_sha256": "6e2cfda820cc9abf89bbb10a38fcea1d997e886d222688f1ffed560bfb1582b4",
+    "optimizer_updates": 0
+  },
+  "private_content_published": false,
+  "weights_changed": false
+}
