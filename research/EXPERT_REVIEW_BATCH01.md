@@ -2,6 +2,8 @@
 
 27 September 2026.
 
+> **Historical stage:** This report records the original two-reviewer result. The held family was later quarantined and replaced under the [machine-review fallback](MACHINE_REVIEW_BATCH01_RESULT.md).
+
 ## Status
 
 The first independent review batch for the 300-family 4B curriculum candidate is complete. Twelve high-risk families were selected before reviewer output, with two from each Mathematics, Physics and Chemistry × Main and Advanced cell. Two model reviewers independently inspected the original question images without candidate answers, solution targets, answer keys or each other's output.

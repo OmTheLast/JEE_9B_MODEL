@@ -1,0 +1,27 @@
+{
+  "version": "machine-review-batch01-public-summary-v1",
+  "date": "2026-09-27",
+  "status": "machine_review_complete_replacement_active_verified",
+  "policy": {
+    "human_certification_required_for_progress": false,
+    "target_changing_disagreements": "quarantine_and_replace",
+    "certification_label": "machine_reviewed_not_human_expert_certified"
+  },
+  "batch": {
+    "original_families_accepted": 11,
+    "original_families_quarantined": 1,
+    "replacement_families_accepted": 1,
+    "active_families": 12,
+    "active_linked_views": 36,
+    "training_ready": 0
+  },
+  "candidate": {
+    "independent_families": 300,
+    "linked_views": 900,
+    "structural_failures": 0,
+    "candidate_index_sha256": "ba20e64c8007ed7b8661f3ffbcd71d2fbdc332d5cf484f4fdea8ed66c287037b",
+    "optimizer_updates": 0
+  },
+  "private_content_published": false,
+  "weights_changed": false
+}
