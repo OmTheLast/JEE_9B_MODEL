@@ -24,3 +24,7 @@ This is a public summary of the JEE project record. It distinguishes measured fa
 The current research decision is **no promoted adapted checkpoint**. The next learning question is whether reviewed atomic→composition→full-solve targets improve both reasoning and answer delivery on *new* independent questions without regressing the unchanged4B baseline. The protected 2026 final reservation has not been used to rescue an unsuccessful checkpoint.
 
 The full [9B training retrospective](TRAINING_RETROSPECTIVE.md) separates measured contributors from unresolved hypotheses and records the safeguards for the approximately 4B track. The next model will be chosen through the published [staged 4B-class selection plan](research/MODEL_SELECTION_4B_PLAN.md).
+
+## Four-batch review: reviewers also need verification
+
+The September 29 review group separated candidate defects, source defects and reviewer errors. A correct final answer can accompany a wrong intermediate inequality or arithmetic explanation. Two correct calculations can also rely on different chemical-product assumptions. Preserve raw reviews, check the source, and keep unresolved families excluded rather than selecting an answer by majority vote. Review-complete and training-release-ready must be separate states. See the [aggregate result](research/REVIEW_GROUP01_2026_09_29.md).
