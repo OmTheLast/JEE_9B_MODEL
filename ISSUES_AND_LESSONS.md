@@ -28,3 +28,7 @@ The full [9B training retrospective](TRAINING_RETROSPECTIVE.md) separates measur
 ## Four-batch review: reviewers also need verification
 
 The September 29 review group separated candidate defects, source defects and reviewer errors. A correct final answer can accompany a wrong intermediate inequality or arithmetic explanation. Two correct calculations can also rely on different chemical-product assumptions. Preserve raw reviews, check the source, and keep unresolved families excluded rather than selecting an answer by majority vote. Review-complete and training-release-ready must be separate states. See the [aggregate result](research/REVIEW_GROUP01_2026_09_29.md).
+
+## 5 October 2026 — Review evidence is not automatic approval
+
+This round exposed correct options backed by invalid proofs, source-symbol misreads, missing teaching steps and unstated approximations. Some holds identify reviewer errors rather than bad candidate answers. One stronger review also challenged previously unanimous primary reviews. Preserve raw evidence, apply independent calculations, quarantine remaining uncertainty and rebuild all linked views after corrections. [Milestone](research/SOL_AND_REVIEW_GROUP02_2026_10_05.md).

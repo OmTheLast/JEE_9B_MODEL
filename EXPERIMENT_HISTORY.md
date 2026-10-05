@@ -22,3 +22,7 @@ The [progress graphs](charts/README.md) visualize checkpoint trajectories and th
 The unchanged, pinned Qwen3.5-9B base is currently the default in the local JEE interaction lab. It is already hosted upstream; this archive does not redistribute it. The five included adapters let readers reproduce the **latest controlled series**, not a final model choice. The next learning question is whether reviewed atomic→composition→full-solve training views improve procedure and answer delivery while preserving the unchanged4B baseline. The [safety contract](research/TRAINING_SAFETY_GATES_V1.md) requires a new independent evaluation before any solver promotion.
 
 The protected Eval01 and reserved 2026 questions were not used to rescue a failed latest-series checkpoint. Development sets have been reused, so apparent gains on them are not independent evidence. Model-assisted/coordinator procedure ratings and source answers still have review limits.
+
+## 5 October 2026 — Screened escalation and review Batch06–09
+
+Sol reviewed twelve user-confirmed holds: six review issues resolved, six remain for scientific/source/target follow-up. The next four batches produced 30 provisionally supported families and 18 holds from 48 families and 96 primary reviews. The candidate stays 300 families/900 views, unreleased; no weights changed. There are 192 families still unreviewed, plus the repair queue. [Aggregate report](research/SOL_AND_REVIEW_GROUP02_2026_10_05.md). Future Sol use requires case-specific user confirmation.
