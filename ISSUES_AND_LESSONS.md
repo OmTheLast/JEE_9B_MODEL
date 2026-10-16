@@ -32,3 +32,8 @@ The September 29 review group separated candidate defects, source defects and re
 ## 5 October 2026 — Review evidence is not automatic approval
 
 This round exposed correct options backed by invalid proofs, source-symbol misreads, missing teaching steps and unstated approximations. Some holds identify reviewer errors rather than bad candidate answers. One stronger review also challenged previously unanimous primary reviews. Preserve raw evidence, apply independent calculations, quarantine remaining uncertainty and rebuild all linked views after corrections. [Milestone](research/SOL_AND_REVIEW_GROUP02_2026_10_05.md).
+
+
+## 16 October 2026 — Verify the question actually read
+
+Blind reviewers can misread chemical formulas or omit mathematical operators. Check actual derivations and original images; do not repair data merely to match a reviewer. A correct final answer does not clear corrupted teaching-target representations. [Aggregate report](research/REVIEW_GROUP03_2026_10_16.md).

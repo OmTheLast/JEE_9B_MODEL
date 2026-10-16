@@ -26,3 +26,8 @@ The protected Eval01 and reserved 2026 questions were not used to rescue a faile
 ## 5 October 2026 — Screened escalation and review Batch06–09
 
 Sol reviewed twelve user-confirmed holds: six review issues resolved, six remain for scientific/source/target follow-up. The next four batches produced 30 provisionally supported families and 18 holds from 48 families and 96 primary reviews. The candidate stays 300 families/900 views, unreleased; no weights changed. There are 192 families still unreviewed, plus the repair queue. [Aggregate report](research/SOL_AND_REVIEW_GROUP02_2026_10_05.md). Future Sol use requires case-specific user confirmation.
+
+
+## 16 October 2026 — Review Batch10–13
+
+48 families reviewed: 30 provisionally supported, 18 held. 156/300 have review evidence; 144 remain. No training or weights changed. [Aggregate report](research/REVIEW_GROUP03_2026_10_16.md).
