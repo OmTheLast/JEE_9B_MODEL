@@ -31,3 +31,8 @@ Sol reviewed twelve user-confirmed holds: six review issues resolved, six remain
 ## 16 October 2026 — Review Batch10–13
 
 48 families reviewed: 30 provisionally supported, 18 held. 156/300 have review evidence; 144 remain. No training or weights changed. [Aggregate report](research/REVIEW_GROUP03_2026_10_16.md).
+
+
+## 16 October 2026 — Review Batch14–17
+
+48 families reviewed: 18 provisionally supported, 30 held. 204/300 have review evidence; 96 remain. No training or weights changed. [Aggregate report](research/REVIEW_GROUP04_2026_10_16.md).

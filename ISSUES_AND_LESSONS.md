@@ -37,3 +37,8 @@ This round exposed correct options backed by invalid proofs, source-symbol misre
 ## 16 October 2026 — Verify the question actually read
 
 Blind reviewers can misread chemical formulas or omit mathematical operators. Check actual derivations and original images; do not repair data merely to match a reviewer. A correct final answer does not clear corrupted teaching-target representations. [Aggregate report](research/REVIEW_GROUP03_2026_10_16.md).
+
+
+## 16 October 2026 — Correct answers can still make poor teaching exercises
+
+This group exposed missing constraints and reaction steps in reviewer proofs, incorrect power interpretation, and candidate exercises with unrelated checks or truncated question text. Verification must perform a calculation rather than appeal to an answer reference. Separate these target repairs from reviewer disagreements; preserve original reviewer errors even when their formatting is corrected. [Aggregate report](research/REVIEW_GROUP04_2026_10_16.md).
