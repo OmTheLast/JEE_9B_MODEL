@@ -42,3 +42,8 @@ Blind reviewers can misread chemical formulas or omit mathematical operators. Ch
 ## 16 October 2026 — Correct answers can still make poor teaching exercises
 
 This group exposed missing constraints and reaction steps in reviewer proofs, incorrect power interpretation, and candidate exercises with unrelated checks or truncated question text. Verification must perform a calculation rather than appeal to an answer reference. Separate these target repairs from reviewer disagreements; preserve original reviewer errors even when their formatting is corrected. [Aggregate report](research/REVIEW_GROUP04_2026_10_16.md).
+
+
+## 18 October2026 — Count questions and difficulty honestly
+
+Teaching views inflate counts if mistaken for independent source questions. Review risk and exam labels are not difficulty ratings. Single- versus multiple-correct format cannot be inferred from selected-answer count. Missing metadata is explicitly unknown. [Aggregate inventory report](research/QUESTION_INVENTORY_2026_10_18.md).
