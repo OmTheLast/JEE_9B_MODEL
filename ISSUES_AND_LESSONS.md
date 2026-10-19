@@ -57,3 +57,8 @@ Blind reviewers can misread chemical formulas or omit mathematical operators. Ch
 ## 19 October 2026 — A correct answer can hide an unusable teaching exercise
 
 The final review group held 34 families primarily for teaching-target corrections. Examples include damaged notation, explanations unrelated to the proposed step, and planning exercises that reveal the answer. Review every linked exercise against its source; final-answer agreement alone does not make a family ready for training. [Aggregate report](research/REVIEW_GROUP06_2026_10_19.md).
+
+
+## 19 October 2026 — Fix relevant procedures without discarding sound questions
+
+A correct numerical solution can coexist with a wrong option label, a generic unrelated step check or a broken derivation. Preserve the source family and original evidence, rebuild all linked views, check actual proofs and notation, and keep unresolved reviewer issues separate. [Report](research/TEACHING_REPAIR_BATCH01_2026_10_19.md).

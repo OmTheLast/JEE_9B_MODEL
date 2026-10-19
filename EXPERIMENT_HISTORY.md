@@ -51,3 +51,8 @@ Created a private300-family/900-view inventory with separate question/exercise c
 ## 19 October 2026 — Review Batch22–25
 
 48 families reviewed: 10 provisionally supported, 38 held. 300/300 have review dispositions; repairs and release checks remain. No training or weights changed. [Aggregate report](research/REVIEW_GROUP06_2026_10_19.md).
+
+
+## 19 October 2026 — First teaching-repair batch
+
+12 families retained and 36 exercises rebuilt;11 completed repair checks and 1 residual source-clearance issue.83 target-repair families remain unbuilt. No training. [Report](research/TEACHING_REPAIR_BATCH01_2026_10_19.md).
