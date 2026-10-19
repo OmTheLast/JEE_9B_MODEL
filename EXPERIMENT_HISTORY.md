@@ -46,3 +46,8 @@ Created a private300-family/900-view inventory with separate question/exercise c
 ## 19 October 2026 — Review Batch18–21
 
 48 families reviewed: 16 provisionally supported,32 held. 252/300 have review evidence; 48 remain. No training or weights changed. [Aggregate report](research/REVIEW_GROUP05_2026_10_19.md).
+
+
+## 19 October 2026 — Review Batch22–25
+
+48 families reviewed: 10 provisionally supported, 38 held. 300/300 have review dispositions; repairs and release checks remain. No training or weights changed. [Aggregate report](research/REVIEW_GROUP06_2026_10_19.md).

@@ -52,3 +52,8 @@ Teaching views inflate counts if mistaken for independent source questions. Revi
 ## 19 October 2026 — Verify the question actually read
 
 Blind reviewers can misread chemical formulas or omit mathematical operators. Check actual derivations and original images; do not repair data merely to match a reviewer. A correct final answer does not clear corrupted teaching-target representations. [Aggregate report](research/REVIEW_GROUP05_2026_10_19.md).
+
+
+## 19 October 2026 — A correct answer can hide an unusable teaching exercise
+
+The final review group held 34 families primarily for teaching-target corrections. Examples include damaged notation, explanations unrelated to the proposed step, and planning exercises that reveal the answer. Review every linked exercise against its source; final-answer agreement alone does not make a family ready for training. [Aggregate report](research/REVIEW_GROUP06_2026_10_19.md).
