@@ -62,3 +62,8 @@ The final review group held 34 families primarily for teaching-target correction
 ## 19 October 2026 — Fix relevant procedures without discarding sound questions
 
 A correct numerical solution can coexist with a wrong option label, a generic unrelated step check or a broken derivation. Preserve the source family and original evidence, rebuild all linked views, check actual proofs and notation, and keep unresolved reviewer issues separate. [Report](research/TEACHING_REPAIR_BATCH01_2026_10_19.md).
+
+
+## 19 October 2026 — Repair the proof, retain the question
+
+A correct answer can hide a source-symbol error, an unsupported bound, an irrelevant verification task or a wrong option mapping. Rebuild every linked teaching view and check the original image. Correct external answers can also contain bad intermediate explanations; model agreement is not a substitute for evidence. Keep source ambiguity separate from repaired targets, and keep those cases out of release eligibility. Each batch closes with hashed artifacts so progress survives interruption. [Complete repair report](research/TEACHING_REPAIR_COMPLETE_2026_10_19.md).

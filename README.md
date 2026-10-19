@@ -16,6 +16,10 @@ tags:
 
 This repository exists to show the actual progression, including regressions. **Do not choose a checkpoint just because one metric looks better.** All five included adapters are experimental; our frozen selection rule promoted none from this latest series. They are MLX-VLM-specific adapters, not a standalone model and not standard PEFT adapters. The [browser preview](https://ompatnaik.com/JEE_9B_MODEL/) runs a separate unchanged 0.8B model on the visitor's device; the [matching Hugging Face archive](https://huggingface.co/OmTheLast/jee-solver-experimental-mlx-adapters) does not host an inference endpoint. See `load_mlx.py` for a command-line 9B loader and [EXPERIMENT_HISTORY.md](EXPERIMENT_HISTORY.md) for the preceding studies.
 
+## Latest data milestone — 19 October 2026
+
+[All 95 teaching-family repairs are now staged](research/TEACHING_REPAIR_COMPLETE_2026_10_19.md): 285 exercises reworked, 83 families with repair checks complete, 12 still needing clearance, and zero source questions discarded. The full pool has 241 provisionally supported families and 59 holds. **No new model training or accuracy result**; a balanced, frozen pilot release and matched comparison remain the next gates.
+
 ## Two interactive harnesses
 
 | Harness | Runs which model, where? | What is recorded? |

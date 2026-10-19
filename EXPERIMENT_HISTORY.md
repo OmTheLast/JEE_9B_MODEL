@@ -56,3 +56,8 @@ Created a private300-family/900-view inventory with separate question/exercise c
 ## 19 October 2026 — First teaching-repair batch
 
 12 families retained and 36 exercises rebuilt;11 completed repair checks and 1 residual source-clearance issue.83 target-repair families remain unbuilt. No training. [Report](research/TEACHING_REPAIR_BATCH01_2026_10_19.md).
+
+
+## 19 October 2026 — All teaching repairs staged
+
+The complete 95-family repair queue was reworked in eight batches: 285 exercises, 83 families with repair checks complete and 12 with remaining clearance. No questions were discarded. The combined pool now has 241 provisionally supported families; 59 remain excluded. No training, loss or accuracy measurement occurred. [Aggregate report](research/TEACHING_REPAIR_COMPLETE_2026_10_19.md).
