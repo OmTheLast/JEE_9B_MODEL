@@ -41,3 +41,8 @@ Sol reviewed twelve user-confirmed holds: six review issues resolved, six remain
 ## 18 October2026 — Training-question inventory
 
 Created a private300-family/900-view inventory with separate question/exercise counts, batch comparisons and source links.242option-based/58numeric; difficulty300unrated. No training. [Aggregate inventory report](research/QUESTION_INVENTORY_2026_10_18.md).
+
+
+## 19 October 2026 — Review Batch18–21
+
+48 families reviewed: 16 provisionally supported,32 held. 252/300 have review evidence; 48 remain. No training or weights changed. [Aggregate report](research/REVIEW_GROUP05_2026_10_19.md).

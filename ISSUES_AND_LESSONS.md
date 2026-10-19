@@ -47,3 +47,8 @@ This group exposed missing constraints and reaction steps in reviewer proofs, in
 ## 18 October2026 — Count questions and difficulty honestly
 
 Teaching views inflate counts if mistaken for independent source questions. Review risk and exam labels are not difficulty ratings. Single- versus multiple-correct format cannot be inferred from selected-answer count. Missing metadata is explicitly unknown. [Aggregate inventory report](research/QUESTION_INVENTORY_2026_10_18.md).
+
+
+## 19 October 2026 — Verify the question actually read
+
+Blind reviewers can misread chemical formulas or omit mathematical operators. Check actual derivations and original images; do not repair data merely to match a reviewer. A correct final answer does not clear corrupted teaching-target representations. [Aggregate report](research/REVIEW_GROUP05_2026_10_19.md).
