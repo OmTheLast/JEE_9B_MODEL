@@ -20,6 +20,10 @@ Model choices are unchanged base, 30-family/last-three-layer step 60, 30-family/
 
 ## Attempt history and privacy
 
+### Returning to the original development installation
+
+If you already have the original JEE development workspace on your Mac, run `python3 src/jee/start_interactive_lab.py` from its JEE root and open [the original lab on port 8765](http://127.0.0.1:8765/). It retains the existing private attempt history in that workspace. The public clone described above uses [port 8766](http://127.0.0.1:8766/) and its own history; cloning the repository does not copy old attempts. Both links need a running local server, which must be restarted after a reboot.
+
 This copy creates `local_lab/runs/<run-id>/` on your Mac. It saves a normalized request and optional image, model identity, streamed progress every 16 tokens, final result or halt record, and worker logs. The page lists the latest 30 attempts and reopens a selected attempt. `local_lab/runs/` is Git-ignored. **No historical user questions, screenshots, private evaluation keys, or local interaction logs are in this public repository.** The original development workspace keeps its own existing history separately. Do not submit protected benchmark questions to this exploratory interface.
 
 The server binds to `127.0.0.1`, checks the local Host/Origin and allows one generation at a time. If generation is interrupted, the last saved progress is visible, but work since the last receipt may be lost. Model files come from Hugging Face; submitted question data stay with the local server.
