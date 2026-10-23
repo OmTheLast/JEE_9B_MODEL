@@ -1,0 +1,39 @@
+{
+  "status": "text-browser-prototype-verified-image-answer-parity-failed",
+  "trained_adapter": "Reliable01 step60 (unselected)",
+  "base_revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+  "source_adapter_sha256": "0e07eb35aeea4b1beaef0916f0c1b679def9b9f8640c36ca17801d9d334d0fc6",
+  "text": {
+    "exact_generated_token_match": true,
+    "tokens": 271,
+    "stop_reason": "eos",
+    "final_answer": 9,
+    "browser_seconds": 71.85159999999404,
+    "browser_load_seconds": 14.64259999999404,
+    "native_seconds": 81.74371695518494
+  },
+  "image": {
+    "question": "2 + 3 = ?",
+    "expected_answer": 5,
+    "browser_and_onnx_cpu_exact_token_match": true,
+    "export_answer": 6,
+    "original_bf16_base_answer": 4,
+    "original_bf16_adapter_answer": 4,
+    "original_mlx_base_answer": 4,
+    "original_mlx_adapter_answer": 4,
+    "cause": "Unresolved: original image recognition already fails, export also changes output. Not evidence that fine-tuning caused this."
+  },
+  "artifact_sizes": {
+    "text_bytes": 6999102442,
+    "fp32_vision_bytes": 1842502619
+  },
+  "limitations": [
+    "Custom ONNX Runtime WebGPU inference with Transformers.js tokenizer, not standard Transformers.js model loader",
+    "One adapter; no checkpoint selector",
+    "Original upstream BF16 weights plus converted LoRA requantized; not original MLX quantization",
+    "Text and fixed384 image engineering fixtures only; no JEE accuracy measurement",
+    "Public production website unchanged; no converted weights uploaded",
+    "Browser peak memory unmeasured; no mobile validation",
+    "General browser image preprocessing and dynamic-resolution support not implemented"
+  ]
+}

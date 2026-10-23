@@ -1,5 +1,7 @@
 # Public browser deployment status — 23 October 2026
 
+**Later export update:** A custom 9B text browser prototype now runs successfully; the image-answer comparison fails. See [the new measured result](EXPORT09B02_BROWSER_PROTOTYPE.md). Earlier exporter-blocker notes below describe the previous state. Public 9B deployment is still unfinished.
+
 **Path correction, 23 October 2026:** The user clarified that the canonical destination is **https://ompatnaik.com/llamajee/**, a subdirectory of the main website. The subdomain entries below are historical. The static build is copied into the portfolio repository’s `llamajee/` directory; its root CNAME and other pages are preserved. Model availability is unchanged.
 
 **Domain correction, 23 October 2026:** The project address is now https://llamajee.ompatnaik.com/, matching the LlamaJEE.js repository name. Cloudflare DNS and GitHub Pages have been updated. References to the former `jee` hostname below describe the earlier deployment checks; they are preserved as history. The new hostname has an approved certificate, HTTPS enforcement is enabled, and the page returned HTTP 200 over verified HTTPS and rendered in Chrome. No new model generation was tested; trained 9B browser execution remains incomplete.

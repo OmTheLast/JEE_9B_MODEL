@@ -1,0 +1,44 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>9B trained layer export verification</title>
+<style>body{font:16px system-ui;max-width:1000px;margin:40px auto;background:#f6f7f4;color:#102b24}button{padding:12px}pre{white-space:pre-wrap;background:white;padding:24px}</style>
+<h1>Actual 9B trained-layer browser check</h1>
+<p>This checks exported layers 29 and 31 against the same quantized ONNX models on CPU. It is not a full 9B solver or an accuracy test.</p>
+<button id="run">Run WebGPU checks</button><pre id="result">Not started</pre>
+<script type="module">
+import * as ort from './runtime/ort.webgpu.min.mjs';
+ort.env.wasm.numThreads=1;
+ort.env.wasm.wasmPaths=new URL('./runtime/',location.href).href;
+const result=document.querySelector('#result');
+const report={runtime:ort.env.versions,tests:[],status:'not-started'};
+const show=()=>result.textContent=JSON.stringify(report,null,2);
+async function binary(url){const r=await fetch(url);if(!r.ok)throw Error(`${r.status}: ${url}`);return new Float32Array(await r.arrayBuffer());}
+document.querySelector('#run').onclick=async()=>{
+ document.querySelector('#run').disabled=true;
+ try{
+  report.status='running';show();
+  if(!navigator.gpu)throw Error('WebGPU unavailable');
+  const adapter=await navigator.gpu.requestAdapter();
+  if(!adapter)throw Error('No WebGPU adapter');
+  report.device={maxBufferSize:adapter.limits.maxBufferSize,maxStorageBufferBindingSize:adapter.limits.maxStorageBufferBindingSize,shaderF16:adapter.features.has('shader-f16')};
+  for(const folder of ['layer29-v3','layer31-v2']){
+   const start=performance.now();report.current=folder;show();
+   const fixture=await (await fetch(`./${folder}/browser-fixture.json`)).json();
+   const feeds={};
+   for(const [name,spec] of Object.entries(fixture.inputs))feeds[name]=new ort.Tensor('float32',await binary(`./${folder}/${spec.file}`),spec.dims);
+   const session=await ort.InferenceSession.create(`./${folder}/layer.q4.onnx`,{executionProviders:['webgpu'],graphOptimizationLevel:'all'});
+   const outputs=await session.run(feeds);const checks=[];
+   for(const [name,spec] of Object.entries(fixture.outputs)){
+    const expected=await binary(`./${folder}/${spec.file}`),actual=await outputs[name].getData();
+    let maxAbs=0,sq=0,ref=0,finite=true;
+    for(let i=0;i<expected.length;i++){const d=actual[i]-expected[i];maxAbs=Math.max(maxAbs,Math.abs(d));sq+=d*d;ref+=expected[i]*expected[i];finite=finite&&Number.isFinite(actual[i]);}
+    const relativeL2=Math.sqrt(sq/Math.max(ref,1e-24));checks.push({name,maxAbs,relativeL2,finite,pass:finite&&relativeL2<0.001});
+   }
+   report.tests.push({folder,seconds:(performance.now()-start)/1000,checks});
+   for(const t of Object.values(outputs))t.dispose();for(const t of Object.values(feeds))t.dispose();await session.release();show();
+  }
+  report.status=report.tests.every(t=>t.checks.every(c=>c.pass))?'passed-layer-checks-only':'numerical-mismatch';
+ }catch(e){report.status='failed';report.error=String(e);report.stack=e.stack;}
+ show();
+};
+</script>

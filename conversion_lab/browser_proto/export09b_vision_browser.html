@@ -1,0 +1,23 @@
+<!doctype html><meta charset="utf-8"><title>9B vision export check</title>
+<h1>Actual 9B image encoder: fixed 384 × 384 test</h1><button id="run">Run WebGPU image encoder</button><pre id="result">Not started</pre>
+<script type="module">
+import * as ort from './runtime/ort.webgpu.min.mjs';
+ort.env.wasm.numThreads=1;ort.env.wasm.wasmPaths=new URL('./runtime/',location.href).href;
+const el=document.querySelector('#result');const root='./vision384-v1/';let r={status:'not-started'};
+document.querySelector('#run').onclick=async()=>{
+ document.querySelector('#run').disabled=true;let session;
+ try{
+  r.status='loading';el.textContent=JSON.stringify(r,null,2);const start=performance.now();
+  const meta=await(await fetch(root+'result.json')).json();
+  const pixels=new Float32Array(await(await fetch(root+'pixels.f32')).arrayBuffer());
+  const expected=new Float32Array(await(await fetch(root+'reference.f32')).arrayBuffer());
+  session=await ort.InferenceSession.create(root+'vision.fp32.onnx',{executionProviders:['webgpu']});
+  const input=new ort.Tensor('float32',pixels,meta.pixel_shape);const outputs=await session.run({pixels:input});
+  const actual=await outputs.image_features.getData();let maxAbs=0,err=0,ref=0,finite=true;
+  for(let i=0;i<actual.length;i++){let d=actual[i]-expected[i];err+=d*d;ref+=expected[i]*expected[i];maxAbs=Math.max(maxAbs,Math.abs(d));finite=finite&&Number.isFinite(actual[i]);}
+  const relativeL2=Math.sqrt(err/ref);r={status:finite&&relativeL2<.001?'passed-fixed-image-features':'numerical-mismatch',maxAbs,relativeL2,finite,shape:outputs.image_features.dims,seconds:(performance.now()-start)/1000,limit:'Single fixed image; no generated image answer yet'};
+  input.dispose();outputs.image_features.dispose();
+ }catch(e){r.status='failed';r.error=String(e);r.stack=e.stack;}
+ finally{if(session)await session.release();el.textContent=JSON.stringify(r,null,2);}
+};
+</script>

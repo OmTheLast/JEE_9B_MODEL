@@ -1,0 +1,91 @@
+<!doctype html><meta charset="utf-8"><title>9B text model browser prototype</title>
+<style>body{max-width:1000px;margin:40px auto;font:16px system-ui;background:#f5f7f4;color:#17392c}pre{white-space:pre-wrap;background:white;padding:20px}button{padding:12px}</style>
+<h1>Actual adapted 9B — local browser export check</h1>
+<p>Text-only custom ONNX Runtime prototype. Uses all 32 decoder layers plus the Reliable01 step-60 adapter. No API inference. Not yet the public website or a Transformers.js drop-in package.</p>
+<p>Loads about 5 GB of model graphs and fetches original token embeddings as needed. This is a desktop test.</p>
+<button id="run">Run synthetic question in browser</button> <button id="stop">Stop after current operation</button>
+<pre id="result">Not started</pre>
+<script type="importmap">{"imports":{"onnxruntime-web/webgpu":"./runtime/ort.webgpu.min.mjs","onnxruntime-common":"./runtime/ort.webgpu.min.mjs"}}</script>
+<script type="module">
+import * as ort from './runtime/ort.webgpu.min.mjs';
+import {PreTrainedTokenizer,env} from './transformers/transformers.web.min.js';
+ort.env.wasm.numThreads=1;ort.env.wasm.wasmPaths=new URL('./runtime/',location.href).href;
+env.allowRemoteModels=false;env.localModelPath=new URL('./',location.href).href;
+const root='./text-q4-v2/';const imageMode=new URLSearchParams(location.search).has('image');
+const r={status:'not-started',scope:imageMode?'Full adapted 9B fixed-image prototype':'Full adapted 9B text-only, custom ORT browser runner',max_new_tokens:imageMode?64:384,generated_ids:[]};
+if(imageMode)document.querySelector('h1').textContent='Actual adapted 9B — fixed-image browser check';
+const show=()=>document.querySelector('#result').textContent=JSON.stringify(r,null,2);let stop=false;
+document.querySelector('#stop').onclick=()=>{stop=true;};
+document.querySelector('#run').onclick=async()=>{
+ document.querySelector('#run').disabled=true;const started=performance.now();const layers=[],heads=[],states=[];let embedCache=new Map();
+ try{
+  r.status='loading';show();
+  const manifest=await (await fetch(root+'manifest.json')).json(),fixture=await (await fetch((imageMode?'./image-arithmetic-v1/':root)+'fixture.json')).json();
+  if(!manifest.status.startsWith('export-complete'))throw Error('Export not complete');
+  const cfg=manifest.config;
+  const tokenizer=new PreTrainedTokenizer(await (await fetch('./tokenizer/tokenizer.json')).json(),await (await fetch('./tokenizer/tokenizer_config.json')).json());
+  const promptIds=tokenizer(fixture.prompt,{add_special_tokens:false}).input_ids.tolist()[0].map(Number);
+  if(JSON.stringify(promptIds)!==JSON.stringify(fixture.input_ids))throw Error('Browser/native prompt token mismatch');
+  const tensor=(dims)=>new ort.Tensor('float32',new Float32Array(dims.reduce((a,b)=>a*b,1)),dims);
+  const deadline=()=>{if(stop)throw Error('User stopped');if(performance.now()-started>600000)throw Error('10 minute prototype deadline reached');};
+  let imageFeatures=null,imageCursor=0;
+  if(imageMode){
+   r.loading='image encoder';show();const vision=await ort.InferenceSession.create('./vision384-v1/vision.fp32.onnx',{executionProviders:['webgpu']});
+   const pixels=new ort.Tensor('float32',new Float32Array(await(await fetch('./image-arithmetic-v1/pixels.f32')).arrayBuffer()),fixture.pixel_shape);
+   const out=await vision.run({pixels});imageFeatures=new Float32Array(await out.image_features.getData());out.image_features.dispose();pixels.dispose();await vision.release();
+  }
+  for(let i=0;i<32;i++){
+   deadline();r.loading=`decoder ${i+1}/32`;show();
+   layers.push(await ort.InferenceSession.create(root+`layer-${String(i).padStart(2,'0')}.onnx`,{executionProviders:['webgpu'],graphOptimizationLevel:'all'}));
+   states.push(cfg.layer_types[i]==='linear_attention'?[tensor([1,8192,4]),tensor([1,32,128,128])]:[tensor([1,4,0,256]),tensor([1,4,0,256])]);
+  }
+  for(let i=0;i<Math.ceil(cfg.vocab_size/16384);i++){
+   deadline();r.loading=`output head ${i+1}/16`;show();
+   heads.push(await ort.InferenceSession.create(root+`head-${String(i).padStart(2,'0')}.onnx`,{executionProviders:['webgpu'],graphOptimizationLevel:'all'}));
+  }
+  r.load_seconds=(performance.now()-started)/1000;r.status='generating';r.input_ids=promptIds;r.prompt=fixture.prompt;show();
+  async function embed(token){
+   const shard=Math.floor(token/8192);let buf=embedCache.get(shard);
+   if(!buf){const response=await fetch(root+`embed-${String(shard).padStart(2,'0')}.bf16`);if(!response.ok)throw Error('Embedding fetch '+response.status);buf=await response.arrayBuffer();embedCache.set(shard,buf);}
+   const row=new Uint16Array(buf,(token%8192)*4096*2,4096),bits=new Uint32Array(4096);
+   for(let i=0;i<4096;i++)bits[i]=row[i]<<16;
+   return new ort.Tensor('float32',new Float32Array(bits.buffer),[1,1,4096]);
+  }
+  const ids=promptIds.slice(),plen=ids.length;
+  for(let pos=0;pos<ids.length;pos++){
+   deadline();let hidden;
+   if(imageMode&&pos<plen&&ids[pos]===fixture.image_token_id){hidden=new ort.Tensor('float32',imageFeatures.slice(imageCursor*4096,(imageCursor+1)*4096),[1,1,4096]);imageCursor++;}
+   else hidden=await embed(ids[pos]);
+   const cs=new Float32Array(64),ss=new Float32Array(64);
+   for(let j=0;j<32;j++){const axis=j%3===1?1:(j%3===2&&j<30?2:0);const position=imageMode?(pos<plen?fixture.position_ids[axis][pos]:pos+fixture.rope_delta):pos;const angle=position/Math.pow(1e7,j/32);cs[j]=cs[j+32]=Math.cos(angle);ss[j]=ss[j+32]=Math.sin(angle);}
+   const cos=new ort.Tensor('float32',cs,[1,1,64]),sin=new ort.Tensor('float32',ss,[1,1,64]);
+   for(let i=0;i<32;i++){
+    deadline();const linear=cfg.layer_types[i]==='linear_attention';
+    const feeds=linear?{hidden,conv:states[i][0],state:states[i][1]}:{hidden,key:states[i][0],value:states[i][1],cos,sin};
+    const out=await layers[i].run(feeds);hidden.dispose();for(const t of states[i])t.dispose();
+    hidden=out.hidden_out;states[i]=linear?[out.conv_out,out.state_out]:[out.key_out,out.value_out];
+   }
+   cos.dispose();sin.dispose();r.prefill_tokens_done=Math.min(pos+1,plen);
+   if(pos>=plen-1){
+    let best=-Infinity,token=-1;let top=[];
+    for(let i=0;i<heads.length;i++){
+     const out=await heads[i].run({hidden});const data=await out.logits.getData();
+     for(let j=0;j<data.length;j++){if(data[j]>best){best=data[j];token=i*16384+j;}if(r.generated_ids.length===0){top.push({id:i*16384+j,logit:data[j]});}}
+     out.logits.dispose();
+    }
+    if(r.generated_ids.length===0){top.sort((a,b)=>b.logit-a.logit);r.first_top5=top.slice(0,5);}
+    r.generated_ids.push(token);r.text=tokenizer.decode(r.generated_ids,{skip_special_tokens:true});r.elapsed_seconds=(performance.now()-started)/1000;show();
+    if(token===cfg.eos_token_id||r.generated_ids.length>=r.max_new_tokens){r.stop_reason=token===cfg.eos_token_id?'eos':'length';hidden.dispose();break;}ids.push(token);
+   }
+   hidden.dispose();if(pos%10===0)show();
+  }
+  r.status=imageMode?'completed-fixed-image-prototype':'completed-text-only';
+ }catch(e){r.status='failed';r.error=String(e);r.stack=e.stack;}
+ finally{
+  r.elapsed_seconds=(performance.now()-started)/1000;show();
+  for(const s of [...layers,...heads]){try{await s.release();}catch{}}
+  for(const pair of states)for(const t of pair){try{t.dispose();}catch{}}
+  embedCache.clear();r.resources_released=true;show();
+ }
+};
+</script>
