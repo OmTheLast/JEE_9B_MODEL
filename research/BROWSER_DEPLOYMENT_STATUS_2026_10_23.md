@@ -27,3 +27,13 @@ Changing the domain does not resolve this model-format problem. We have not expo
 4. Publish the verified browser weights and add the model selector only after that path works. Measure device support; do not promise a 9B model fits phones merely because the page loads there.
 
 Existing local harnesses remain as historical development tools, but are not the requested public runtime. A hosted inference service or a tunnel to a Mac would violate the browser-only requirement and is not used.
+
+## Domain and page verification
+
+The site is now branded **LlamaJEE.js**, matching this repository. A notebook-style home page, solver workspace, model availability cards and preserved experiment graphs are published. The project name does not mean the underlying model is Meta Llama; the current checkpoints use Qwen.
+
+GitHub Pages serves the static build from `main/docs`. The custom hostname is configured, and public DNS confirms `jee.ompatnaik.com` is a CNAME to `omthelast.github.io`. The public HTTP response contains the new title, notebook and explicit 9B-pending label. The build and all four existing harness tests pass. The unchanged model worker bundle retains its previous hash; no inference route was added.
+
+At the last check in this round, GitHub was still provisioning the domain's HTTPS certificate after an initial cached DNS-not-found response. A single documented hostname revalidation was performed after public DNS propagated. HTTPS has not yet been verified, so the solver is not declared ready on this hostname: WebGPU requires a secure context. Do not bypass certificate warnings or turn off TLS verification. The next hosting check is to verify issuance and enable HTTPS enforcement, followed by a public-browser smoke test.
+
+Desktop layout was inspected in Chrome and one positioning defect was corrected. Responsive CSS is included; the browser automation's attempted viewport override did not change the measured desktop width, so mobile rendering is not claimed as verified. No new model inference or JEE accuracy experiment ran in this round.
