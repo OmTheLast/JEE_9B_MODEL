@@ -1,5 +1,7 @@
 # Public browser deployment status — 23 October 2026
 
+**Latest diagnostic:** [Two-image investigation and original-weight browser proof](EXPORT09B03_IMAGE_DIAGNOSTICS.md). No public model replacement; complete conversion is still pending.
+
 **Later export update:** A custom 9B text browser prototype now runs successfully; the image-answer comparison fails. See [the new measured result](EXPORT09B02_BROWSER_PROTOTYPE.md). Earlier exporter-blocker notes below describe the previous state. Public 9B deployment is still unfinished.
 
 **Path correction, 23 October 2026:** The user clarified that the canonical destination is **https://ompatnaik.com/llamajee/**, a subdirectory of the main website. The subdomain entries below are historical. The static build is copied into the portfolio repository’s `llamajee/` directory; its root CNAME and other pages are preserved. Model availability is unchanged.

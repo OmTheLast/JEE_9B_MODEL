@@ -1,0 +1,665 @@
+{
+  "status": "diagnostic-round-complete-full-public-release-incomplete",
+  "cases": {
+    "addition": {
+      "expected": 5,
+      "bf16_base": 4,
+      "bf16_adapted": 4,
+      "bf16_with_fp32_vision": 4,
+      "q4_fp32vision": 6,
+      "q4_bf16vision": 6,
+      "processor_roundtrip_max_pixel_error": 0,
+      "vision_fp32": {
+        "native_vs_onnx": {
+          "max_abs": 0.0017871856689453125,
+          "relative_l2": 2.7943553443157046e-05
+        },
+        "allclose_2e-3": true
+      },
+      "original_mlx": {
+        "processor": {
+          "input_ids": {
+            "shape": [
+              1,
+              179
+            ],
+            "equal": true,
+            "error": {
+              "max_abs": 0.0,
+              "relative_l2": 0.0
+            }
+          },
+          "pixel_values": {
+            "shape": [
+              576,
+              1536
+            ],
+            "equal": false,
+            "error": {
+              "max_abs": 1.1920928955078125e-07,
+              "relative_l2": 4.76678289374086e-09
+            }
+          },
+          "image_grid_thw": {
+            "shape": [
+              1,
+              3
+            ],
+            "equal": true,
+            "error": {
+              "max_abs": 0.0,
+              "relative_l2": 0.0
+            }
+          }
+        },
+        "positions_equal": true,
+        "position_shape": [
+          3,
+          1,
+          179
+        ],
+        "vision_vs_native_fp32": {
+          "max_abs": 6.7071533203125,
+          "relative_l2": 0.08326623782610777
+        },
+        "base": {
+          "text": "The image shows the arithmetic expression \"2 + 2 = 4\".\n\nFINAL_ANSWER: 4",
+          "prompt_tokens": 179,
+          "generation_tokens": 23,
+          "finish_reason": "stop",
+          "elapsed_seconds": 0.6364977920020465,
+          "reported_peak_memory_gb": 6.556856489
+        },
+        "adapted": {
+          "text": "The image shows the arithmetic expression \"2 + 2\", which equals 4.\n\nFINAL_ANSWER: 4",
+          "prompt_tokens": 179,
+          "generation_tokens": 25,
+          "finish_reason": "stop",
+          "elapsed_seconds": 0.632851208007196,
+          "reported_peak_memory_gb": 6.565920713
+        }
+      }
+    },
+    "subtraction": {
+      "expected": 7,
+      "bf16_base": 2,
+      "bf16_adapted": 2,
+      "bf16_with_fp32_vision": 2,
+      "q4_fp32vision": 2,
+      "q4_bf16vision": 2,
+      "processor_roundtrip_max_pixel_error": 0,
+      "vision_fp32": {
+        "native_vs_onnx": {
+          "max_abs": 0.0015778541564941406,
+          "relative_l2": 2.5588078618289592e-05
+        },
+        "allclose_2e-3": true
+      },
+      "original_mlx": {
+        "processor": {
+          "input_ids": {
+            "shape": [
+              1,
+              179
+            ],
+            "equal": true,
+            "error": {
+              "max_abs": 0.0,
+              "relative_l2": 0.0
+            }
+          },
+          "pixel_values": {
+            "shape": [
+              576,
+              1536
+            ],
+            "equal": false,
+            "error": {
+              "max_abs": 1.1920928955078125e-07,
+              "relative_l2": 4.4814989222886454e-09
+            }
+          },
+          "image_grid_thw": {
+            "shape": [
+              1,
+              3
+            ],
+            "equal": true,
+            "error": {
+              "max_abs": 0.0,
+              "relative_l2": 0.0
+            }
+          }
+        },
+        "positions_equal": true,
+        "position_shape": [
+          3,
+          1,
+          179
+        ],
+        "vision_vs_native_fp32": {
+          "max_abs": 3.1030702590942383,
+          "relative_l2": 0.06067399106157401
+        },
+        "base": {
+          "text": "The image shows the equation \"1 + 1 = 2\". This is a simple arithmetic expression where 1 plus 1 equals 2.\n\nFINAL_ANSWER: 2",
+          "prompt_tokens": 179,
+          "generation_tokens": 38,
+          "finish_reason": "stop",
+          "elapsed_seconds": 0.7638940830074716,
+          "reported_peak_memory_gb": 6.560012721
+        },
+        "adapted": {
+          "text": "The image shows the equation \"1 + 1 = 2\". This is a simple arithmetic expression where 1 plus 1 equals 2.\n\nFINAL_ANSWER: 2",
+          "prompt_tokens": 179,
+          "generation_tokens": 38,
+          "finish_reason": "stop",
+          "elapsed_seconds": 0.7914762499858625,
+          "reported_peak_memory_gb": 6.565920713
+        }
+      }
+    }
+  },
+  "decoder_checks": {
+    "addition": [
+      {
+        "layer": 0,
+        "tokens": 179,
+        "precision": "native/custom FP32, exact same BF16-control input values promoted to FP32; folded adapter",
+        "native_vs_custom": {
+          "max_abs": 4.38690185546875e-05,
+          "relative_l2": 7.03671288864778e-07
+        },
+        "q4_vs_custom": {
+          "max_abs": 0.4889240264892578,
+          "relative_l2": 0.02920495581400889
+        },
+        "native_fp32_vs_recorded_bf16": {
+          "max_abs": 0.15740394592285156,
+          "relative_l2": 0.0026852747900066483
+        },
+        "last_token_native_vs_custom": {
+          "max_abs": 2.3096799850463867e-07,
+          "relative_l2": 5.042207982745883e-07
+        },
+        "last_token_q4_vs_custom": {
+          "max_abs": 0.14076757431030273,
+          "relative_l2": 0.057434208537998264
+        },
+        "q4_state_errors": [
+          {
+            "max_abs": 1.144174575805664,
+            "relative_l2": 0.0296435283051654
+          },
+          {
+            "max_abs": 1.1547027826309204,
+            "relative_l2": 0.05356477224016727
+          }
+        ],
+        "elapsed_seconds": 2.1086132526397705,
+        "scope": "layer-local comparison, not full-model FP32 end-to-end or JEE accuracy",
+        "native_custom_allclose": true
+      },
+      {
+        "layer": 3,
+        "tokens": 179,
+        "precision": "native/custom FP32, exact same BF16-control input values promoted to FP32; folded adapter",
+        "native_vs_custom": {
+          "max_abs": 1.9073486328125e-05,
+          "relative_l2": 4.4568113556238566e-07
+        },
+        "q4_vs_custom": {
+          "max_abs": 0.4603271484375,
+          "relative_l2": 0.028709581370860725
+        },
+        "native_fp32_vs_recorded_bf16": {
+          "max_abs": 0.21161651611328125,
+          "relative_l2": 0.0027127392575564432
+        },
+        "last_token_native_vs_custom": {
+          "max_abs": 1.9073486328125e-06,
+          "relative_l2": 7.296568463015833e-07
+        },
+        "last_token_q4_vs_custom": {
+          "max_abs": 0.07806968688964844,
+          "relative_l2": 0.06650839999054936
+        },
+        "q4_state_errors": [
+          {
+            "max_abs": 1.1552560329437256,
+            "relative_l2": 0.1330692297581895
+          },
+          {
+            "max_abs": 0.410459041595459,
+            "relative_l2": 0.12175335069828848
+          }
+        ],
+        "elapsed_seconds": 2.012392044067383,
+        "scope": "layer-local comparison, not full-model FP32 end-to-end or JEE accuracy",
+        "native_custom_allclose": true
+      },
+      {
+        "layer": 29,
+        "tokens": 179,
+        "precision": "native/custom FP32, exact same BF16-control input values promoted to FP32; folded adapter",
+        "native_vs_custom": {
+          "max_abs": 8.392333984375e-05,
+          "relative_l2": 1.0855526265916097e-06
+        },
+        "q4_vs_custom": {
+          "max_abs": 1.2844924926757812,
+          "relative_l2": 0.04988516192550316
+        },
+        "native_fp32_vs_recorded_bf16": {
+          "max_abs": 0.4353790283203125,
+          "relative_l2": 0.003164179406014121
+        },
+        "last_token_native_vs_custom": {
+          "max_abs": 1.52587890625e-05,
+          "relative_l2": 7.633621815053271e-07
+        },
+        "last_token_q4_vs_custom": {
+          "max_abs": 0.3777639865875244,
+          "relative_l2": 0.04213851023125444
+        },
+        "q4_state_errors": [
+          {
+            "max_abs": 0.6744909286499023,
+            "relative_l2": 0.07084050503736189
+          },
+          {
+            "max_abs": 0.05724771320819855,
+            "relative_l2": 0.0947398459337019
+          }
+        ],
+        "elapsed_seconds": 2.1995530128479004,
+        "scope": "layer-local comparison, not full-model FP32 end-to-end or JEE accuracy",
+        "native_custom_allclose": true
+      },
+      {
+        "layer": 31,
+        "tokens": 179,
+        "precision": "native/custom FP32, exact same BF16-control input values promoted to FP32; folded adapter",
+        "native_vs_custom": {
+          "max_abs": 0.00020599365234375,
+          "relative_l2": 1.3629090775554005e-06
+        },
+        "q4_vs_custom": {
+          "max_abs": 7.039226531982422,
+          "relative_l2": 0.08088186278748491
+        },
+        "native_fp32_vs_recorded_bf16": {
+          "max_abs": 0.6683425903320312,
+          "relative_l2": 0.003805323874163593
+        },
+        "last_token_native_vs_custom": {
+          "max_abs": 5.53131103515625e-05,
+          "relative_l2": 1.3326251323015914e-06
+        },
+        "last_token_q4_vs_custom": {
+          "max_abs": 0.9850296974182129,
+          "relative_l2": 0.06891194063100207
+        },
+        "q4_state_errors": [
+          {
+            "max_abs": 0.8054129034280777,
+            "relative_l2": 0.08696307222388888
+          },
+          {
+            "max_abs": 1.1336002945899963,
+            "relative_l2": 0.03896364027933241
+          }
+        ],
+        "elapsed_seconds": 1.9784038066864014,
+        "scope": "layer-local comparison, not full-model FP32 end-to-end or JEE accuracy",
+        "native_custom_allclose": true
+      }
+    ],
+    "subtraction": [
+      {
+        "layer": 0,
+        "tokens": 179,
+        "precision": "native/custom FP32, exact same BF16-control input values promoted to FP32; folded adapter",
+        "native_vs_custom": {
+          "max_abs": 4.38690185546875e-05,
+          "relative_l2": 6.749189904218964e-07
+        },
+        "q4_vs_custom": {
+          "max_abs": 0.5570716857910156,
+          "relative_l2": 0.028135386896859054
+        },
+        "native_fp32_vs_recorded_bf16": {
+          "max_abs": 0.1631927490234375,
+          "relative_l2": 0.0025489077201455517
+        },
+        "last_token_native_vs_custom": {
+          "max_abs": 2.86102294921875e-06,
+          "relative_l2": 7.597542370234008e-07
+        },
+        "last_token_q4_vs_custom": {
+          "max_abs": 0.1414647102355957,
+          "relative_l2": 0.0578255949644714
+        },
+        "q4_state_errors": [
+          {
+            "max_abs": 1.144174575805664,
+            "relative_l2": 0.0296435283051654
+          },
+          {
+            "max_abs": 1.152019277215004,
+            "relative_l2": 0.05352569976132454
+          }
+        ],
+        "elapsed_seconds": 2.1054739952087402,
+        "scope": "layer-local comparison, not full-model FP32 end-to-end or JEE accuracy",
+        "native_custom_allclose": true
+      },
+      {
+        "layer": 3,
+        "tokens": 179,
+        "precision": "native/custom FP32, exact same BF16-control input values promoted to FP32; folded adapter",
+        "native_vs_custom": {
+          "max_abs": 1.52587890625e-05,
+          "relative_l2": 4.349036513757084e-07
+        },
+        "q4_vs_custom": {
+          "max_abs": 0.5124721527099609,
+          "relative_l2": 0.02818558963530192
+        },
+        "native_fp32_vs_recorded_bf16": {
+          "max_abs": 0.1605682373046875,
+          "relative_l2": 0.0024685317168918787
+        },
+        "last_token_native_vs_custom": {
+          "max_abs": 1.9073486328125e-06,
+          "relative_l2": 8.088203471616409e-07
+        },
+        "last_token_q4_vs_custom": {
+          "max_abs": 0.08841419219970703,
+          "relative_l2": 0.06731601804642112
+        },
+        "q4_state_errors": [
+          {
+            "max_abs": 1.1542508006095886,
+            "relative_l2": 0.13308455714341247
+          },
+          {
+            "max_abs": 0.4207375645637512,
+            "relative_l2": 0.12206309887200266
+          }
+        ],
+        "elapsed_seconds": 1.965343952178955,
+        "scope": "layer-local comparison, not full-model FP32 end-to-end or JEE accuracy",
+        "native_custom_allclose": true
+      },
+      {
+        "layer": 29,
+        "tokens": 179,
+        "precision": "native/custom FP32, exact same BF16-control input values promoted to FP32; folded adapter",
+        "native_vs_custom": {
+          "max_abs": 7.62939453125e-05,
+          "relative_l2": 1.0628971791356496e-06
+        },
+        "q4_vs_custom": {
+          "max_abs": 1.2578845024108887,
+          "relative_l2": 0.050479229572233796
+        },
+        "native_fp32_vs_recorded_bf16": {
+          "max_abs": 0.41846466064453125,
+          "relative_l2": 0.0031480033992672264
+        },
+        "last_token_native_vs_custom": {
+          "max_abs": 2.288818359375e-05,
+          "relative_l2": 7.426536225939443e-07
+        },
+        "last_token_q4_vs_custom": {
+          "max_abs": 0.36641788482666016,
+          "relative_l2": 0.0427096855051128
+        },
+        "q4_state_errors": [
+          {
+            "max_abs": 0.6224420070648193,
+            "relative_l2": 0.07049269751495396
+          },
+          {
+            "max_abs": 0.06037120521068573,
+            "relative_l2": 0.09512680341602713
+          }
+        ],
+        "elapsed_seconds": 2.1693010330200195,
+        "scope": "layer-local comparison, not full-model FP32 end-to-end or JEE accuracy",
+        "native_custom_allclose": true
+      },
+      {
+        "layer": 31,
+        "tokens": 179,
+        "precision": "native/custom FP32, exact same BF16-control input values promoted to FP32; folded adapter",
+        "native_vs_custom": {
+          "max_abs": 0.000274658203125,
+          "relative_l2": 1.3633534440106735e-06
+        },
+        "q4_vs_custom": {
+          "max_abs": 6.857059478759766,
+          "relative_l2": 0.08136734090731206
+        },
+        "native_fp32_vs_recorded_bf16": {
+          "max_abs": 0.7965850830078125,
+          "relative_l2": 0.00385423167896111
+        },
+        "last_token_native_vs_custom": {
+          "max_abs": 6.866455078125e-05,
+          "relative_l2": 1.3334354324781783e-06
+        },
+        "last_token_q4_vs_custom": {
+          "max_abs": 1.1319375038146973,
+          "relative_l2": 0.06824290213913604
+        },
+        "q4_state_errors": [
+          {
+            "max_abs": 0.8746712803840637,
+            "relative_l2": 0.0882808804853896
+          },
+          {
+            "max_abs": 1.196352243423462,
+            "relative_l2": 0.039235028417632566
+          }
+        ],
+        "elapsed_seconds": 1.9645891189575195,
+        "scope": "layer-local comparison, not full-model FP32 end-to-end or JEE accuracy",
+        "native_custom_allclose": true
+      }
+    ]
+  },
+  "quantization_alternatives": {
+    "layer31-q8-symmetric": {
+      "layer": 31,
+      "bits": 8,
+      "symmetric": true,
+      "block_size": 32,
+      "accuracy_level": 0,
+      "conditions": {
+        "addition": {
+          "vs_fp32": {
+            "max_abs": 0.46715545654296875,
+            "relative_l2": 0.0050577767951349465
+          },
+          "last_token_vs_fp32": {
+            "max_abs": 0.09379339218139648,
+            "relative_l2": 0.004390670669362033
+          }
+        },
+        "subtraction": {
+          "vs_fp32": {
+            "max_abs": 0.4757862091064453,
+            "relative_l2": 0.005060439089701119
+          },
+          "last_token_vs_fp32": {
+            "max_abs": 0.08762550354003906,
+            "relative_l2": 0.004324007254733095
+          }
+        }
+      },
+      "file_bytes": 235988423,
+      "elapsed_seconds": 35.340325117111206,
+      "scope": "layer-only CPU comparison; no full-model answer or browser support claim"
+    },
+    "layer31-q4-asymmetric": {
+      "layer": 31,
+      "bits": 4,
+      "symmetric": false,
+      "block_size": 32,
+      "accuracy_level": 0,
+      "conditions": {
+        "addition": {
+          "vs_fp32": {
+            "max_abs": 8.119659423828125,
+            "relative_l2": 0.07350569063263411
+          },
+          "last_token_vs_fp32": {
+            "max_abs": 3.295856475830078,
+            "relative_l2": 0.06640726631819813
+          }
+        },
+        "subtraction": {
+          "vs_fp32": {
+            "max_abs": 8.179893493652344,
+            "relative_l2": 0.07387925109639405
+          },
+          "last_token_vs_fp32": {
+            "max_abs": 2.6537246704101562,
+            "relative_l2": 0.06457700531042847
+          }
+        }
+      },
+      "file_bytes": 134408149,
+      "elapsed_seconds": 2.933382987976074,
+      "scope": "layer-only CPU comparison; no full-model answer or browser support claim"
+    },
+    "layer29-q8-symmetric": {
+      "layer": 29,
+      "bits": 8,
+      "symmetric": true,
+      "block_size": 32,
+      "accuracy_level": 0,
+      "conditions": {
+        "addition": {
+          "vs_fp32": {
+            "max_abs": 0.09422111511230469,
+            "relative_l2": 0.0031251213437922224
+          },
+          "last_token_vs_fp32": {
+            "max_abs": 0.0418243408203125,
+            "relative_l2": 0.0025407005447752123
+          }
+        },
+        "subtraction": {
+          "vs_fp32": {
+            "max_abs": 0.11011219024658203,
+            "relative_l2": 0.0031489794419044255
+          },
+          "last_token_vs_fp32": {
+            "max_abs": 0.028472900390625,
+            "relative_l2": 0.00256938975091142
+          }
+        }
+      },
+      "file_bytes": 245842765,
+      "elapsed_seconds": 36.74690103530884,
+      "scope": "layer-only CPU comparison; no full-model answer or browser support claim"
+    },
+    "layer29-q4-asymmetric": {
+      "layer": 29,
+      "bits": 4,
+      "symmetric": false,
+      "block_size": 32,
+      "accuracy_level": 0,
+      "conditions": {
+        "addition": {
+          "vs_fp32": {
+            "max_abs": 1.1338844299316406,
+            "relative_l2": 0.04671470363561016
+          },
+          "last_token_vs_fp32": {
+            "max_abs": 0.3923380374908447,
+            "relative_l2": 0.03886772855650577
+          }
+        },
+        "subtraction": {
+          "vs_fp32": {
+            "max_abs": 1.32879638671875,
+            "relative_l2": 0.04704025223451324
+          },
+          "last_token_vs_fp32": {
+            "max_abs": 0.3777132034301758,
+            "relative_l2": 0.03951758987928112
+          }
+        }
+      },
+      "file_bytes": 140072352,
+      "elapsed_seconds": 3.0702662467956543,
+      "scope": "layer-only CPU comparison; no full-model answer or browser support claim"
+    }
+  },
+  "original_weight_projection": {
+    "base_error": {
+      "max_abs": 2.2411346435546875e-05,
+      "relative_l2": 4.865558814486902e-07
+    },
+    "adapted_error": {
+      "max_abs": 2.2411346435546875e-05,
+      "relative_l2": 4.865836906354686e-07
+    },
+    "original_quantization": {
+      "group_size": 64,
+      "bits": 4,
+      "mode": "affine"
+    },
+    "precision": "matched FP32 inputs/scales/biases and accumulation; original packed codes unchanged",
+    "base_allclose": true,
+    "adapted_allclose": true,
+    "file_bytes": 32113387,
+    "scope": "one projection on one real hidden input; CPU ORT vs MLX Metal; browser and full model untested"
+  },
+  "original_weight_projection_browser": {
+    "status": "complete",
+    "base_error": {
+      "relative_l2": 2.468294028652312e-07,
+      "max_abs": 7.62939453125e-06
+    },
+    "adapter_error": {
+      "relative_l2": 2.470809553426097e-07,
+      "max_abs": 7.62939453125e-06
+    },
+    "passed": true,
+    "seconds": 0.6730999999940396,
+    "scope": "one real projection; not full-model parity"
+  },
+  "failed_full_precision_controls": {
+    "mps": {
+      "results": [
+        {
+          "mode": "bf16-fp32vision",
+          "exit": 0
+        },
+        {
+          "mode": "fp32",
+          "exit": 1
+        }
+      ],
+      "elapsed_seconds": 22.97245168685913
+    },
+    "cpu": {
+      "exit": -15,
+      "reason": "deadline",
+      "elapsed_seconds": 301.91473293304443,
+      "minimum_sampled_free_percent": 36
+    }
+  },
+  "limits": [
+    "Only two synthetic images; no JEE benchmark or training.",
+    "Native/custom FP32 checks cover four layers on real prompt inputs, not a full-model FP32 generation.",
+    "Original base and adapted image failures remain unresolved.",
+    "Preserved original-weight conversion covers one projection, not all layers or checkpoints.",
+    "Public site unchanged; no new model upload or phone test."
+  ]
+}

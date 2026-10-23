@@ -26,6 +26,8 @@ By Om Patnaik · repository created September 2026.
 
 [Actual 9B browser prototype and failed image checks](research/EXPORT09B02_BROWSER_PROTOTYPE.md): one trained checkpoint now completes a synthetic text question in Chrome, with exact CPU/browser token agreement. This prototype has not replaced the public 0.8B demo.
 
+[Image diagnosis and original-weight conversion](research/EXPORT09B03_IMAGE_DIAGNOSTICS.md): two-image controls narrow the discrepancy; preserving original MLX compressed weights and a separate adapter passes one real projection in Chrome. Full-model conversion and public checkpoint selection remain unfinished.
+
 ## Public browser deployment
 
 The requested public address is [ompatnaik.com/llamajee/](https://ompatnaik.com/llamajee/). The current browser demo computes on the visitor’s device without an inference API. **The trained 9B browser export is still pending**; read the [dated deployment and export status](research/BROWSER_DEPLOYMENT_STATUS_2026_10_23.md). The local links below preserve the earlier development harness.
