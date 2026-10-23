@@ -10,7 +10,9 @@ tags:
   - experimental
 ---
 
-<h1 align="center">Experimental JEE Solver Adapters</h1>
+<h1 align="center">LlamaJEE.js</h1>
+
+A browser-first JEE solver project by Om Patnaik, with a preserved record of its Qwen model experiments.
 
 **Inspect five MLX LoRA adapters, their tradeoffs against the unchanged 9B base, and the gates that kept them experimental.**
 

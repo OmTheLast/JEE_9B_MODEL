@@ -20,7 +20,7 @@ function state(label, kind = '') {
 function status(message) { $('model-status').textContent = message; }
 function refreshControls() {
   $('load-button').disabled = !navigator.gpu || modelReady || modelLoading || solving;
-  $('load-button').textContent = modelReady ? 'Model ready ✓' : modelLoading ? 'Loading model…' : 'Load model locally ↓';
+  $('load-button').textContent = modelReady ? 'Model ready ✓' : modelLoading ? 'Loading model…' : 'Download browser model ↓';
   $('solve-button').disabled = !modelReady || solving;
 }
 function showError(message) {
@@ -152,6 +152,6 @@ $('solve-form').addEventListener('submit', async (event) => {
   worker.postMessage(request, imageBuffer ? [imageBuffer] : []);
 });
 
-if (navigator.gpu) status('WebGPU detected. Click “Load model locally” to start the one-time download.');
+if (navigator.gpu) status('WebGPU detected. Click “Download browser model” to start the one-time download.');
 else { status('WebGPU not detected. Try current Chrome or Edge on a supported device.'); $('load-button').disabled = true; state('WebGPU needed', 'error'); }
 refreshControls();
