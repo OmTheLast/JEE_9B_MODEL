@@ -1,5 +1,7 @@
 # Public browser deployment status — 23 October 2026
 
+**Domain correction, 23 October 2026:** The project address is now https://llamajee.ompatnaik.com/, matching the LlamaJEE.js repository name. Cloudflare DNS and GitHub Pages have been updated. References to the former `jee` hostname below describe the earlier deployment checks; they are preserved as history. HTTPS and trained 9B browser execution require separate verification.
+
 The requested destination is https://jee.ompatnaik.com/. The site is static: the visitor downloads model files and computes answers on their own device. There is no inference API, API key, localhost dependency, or question-upload endpoint. Hosting and model-file downloads still use the internet.
 
 ## What can run today

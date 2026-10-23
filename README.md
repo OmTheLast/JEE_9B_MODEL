@@ -16,7 +16,7 @@ A browser-first JEE solver project by Om Patnaik, with a preserved record of its
 
 **Inspect five MLX LoRA adapters, their tradeoffs against the unchanged 9B base, and the gates that kept them experimental.**
 
-[Original 9B lab setup](local_lab/README.md#run-it) · [Separate 0.8B browser demo](https://jee.ompatnaik.com/) · [Archived 9B adapters](https://huggingface.co/OmTheLast/jee-solver-experimental-mlx-adapters)
+[Original 9B lab setup](local_lab/README.md#run-it) · [Separate 0.8B browser demo](https://llamajee.ompatnaik.com/) · [Archived 9B adapters](https://huggingface.co/OmTheLast/jee-solver-experimental-mlx-adapters)
 
 Apple Silicon + MLX for 9B inference. Browser preview runs a separate unchanged 0.8B model. Private questions and optimizer state are not published.
 
@@ -24,7 +24,7 @@ By Om Patnaik · repository created September 2026.
 
 ## Public browser deployment
 
-The requested public address is [jee.ompatnaik.com](https://jee.ompatnaik.com/). The current browser demo computes on the visitor’s device without an inference API. **The trained 9B browser export is still pending**; read the [dated deployment and export status](research/BROWSER_DEPLOYMENT_STATUS_2026_10_23.md). The local links below preserve the earlier development harness.
+The requested public address is [llamajee.ompatnaik.com](https://llamajee.ompatnaik.com/). The current browser demo computes on the visitor’s device without an inference API. **The trained 9B browser export is still pending**; read the [dated deployment and export status](research/BROWSER_DEPLOYMENT_STATUS_2026_10_23.md). The local links below preserve the earlier development harness.
 
 ## Open the original 9B models
 
@@ -37,13 +37,13 @@ The original browser interface uses **browser → local Python server → MLX 9B
 
 Both interfaces offer the unchanged Qwen3.5-9B base and three experimental step-60 adapters: **30 families / 3 layers**, **30 families / 16 layers**, and **60 families / 3 layers**. Five adapter checkpoints are archived in this repository; three are selectable in the interface.
 
-These `127.0.0.1` links connect to **the computer where you open them** and require its local server to be running. GitHub does not host a public 9B inference server. The [public Transformers.js demo](https://jee.ompatnaik.com/) runs the separate unchanged **0.8B ONNX** model inside the browser. Our original 9B lab uses **MLX weights and adapters**.
+These `127.0.0.1` links connect to **the computer where you open them** and require its local server to be running. GitHub does not host a public 9B inference server. The [public Transformers.js demo](https://llamajee.ompatnaik.com/) runs the separate unchanged **0.8B ONNX** model inside the browser. Our original 9B lab uses **MLX weights and adapters**.
 
 ## Install
 
 | Platform / path | Start here |
 | --- | --- |
-| Browser preview | [Try the unchanged 0.8B preview](https://jee.ompatnaik.com/) |
+| Browser preview | [Try the unchanged 0.8B preview](https://llamajee.ompatnaik.com/) |
 | Local 9B lab | Follow [local setup](local_lab/README.md) for the pinned base and compatible MLX stack |
 
 Start with `history.csv` and the chart notes without downloading weights. To inspect a 9B adapter, use `load_mlx.py` after installing the compatible stack; it downloads the pinned base separately. None of the latest adapters was promoted as a better solver.
