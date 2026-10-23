@@ -15,11 +15,11 @@ The custom runtime uses ONNX Runtime WebGPU and the Transformers.js tokenizer. I
 | Full CPU generated sequences | 18/18 exact matches | Base plus five adapters, three synthetic fixtures each; matched-FP32 original MLX controls |
 | Full Chrome generated sequences | 10/10 exact matches | Text for all six choices; two images for base and Reliable01 step 60 |
 | Browser image preprocessing | Passed | Exact IDs/positions; maximum pixel error 5.91e-8 |
-| Complete decoder layers29/31 | Passed | Outputs and recurrent/cache states over real 179-token inputs, matched FP32 |
+| Complete decoder layers 29/31 | Passed | Outputs and recurrent/cache states over real 179-token inputs, matched FP32 |
 | Published candidate files | 312 artifact hashes verified locally | 7,540,332,526 bytes, including optional vision and tokenizer |
 | Harness/helper tests | 7 passed | Existing format/sign checks, embedding unpacking, image positions, loop guard |
 
-Browser text runs took approximately 5.5–5.7seconds after loading for a 34-token prompt and 7 output tokens. Image runs process 179 prompt tokens. Download/loading/vision time is excluded from these decoder timings. The machine has 64 GiB unified memory; this does not establish minimum requirements or phone support.
+Browser text runs took approximately 5.5–5.7 seconds after loading for a 34-token prompt and 7 output tokens. Image runs process 179 prompt tokens. Download/loading/vision time is excluded from these decoder timings. The machine has 64 GiB unified memory; this does not establish minimum requirements or phone support.
 
 ## Original image failures remain
 
@@ -28,9 +28,9 @@ Images of `2 + 3 = ?` and `8 - 1 = ?` produce 4 and 2 instead of 5 and 7 in both
 ## Available archive selections
 
 - Unchanged original 9B base.
-- Reliable01:30 families, final 3 language layers, steps 30/60/90.
-- Coverage:30 families, final 16 layers, step 60.
-- Expanded data:60 families, final 3 layers, step 60.
+- Reliable01: 30 families, final 3 language layers, steps 30/60/90.
+- Coverage: 30 families, final 16 layers, step 60.
+- Expanded data: 60 families, final 3 layers, step 60.
 
 A family is one independent source question with related teaching exercises. A step is one optimizer update. These are five archived snapshots, not every historical step. No adapter has been promoted as a generally better JEE solver.
 
@@ -38,7 +38,7 @@ A family is one independent source question with related teaching exercises. A s
 
 - Preserve already 1-centered, rounded MLX RMS normalization weights; use the correct convention in the target operation.
 - Match MLX recurrent RMS normalization epsilon after converting a mean into a sum.
-- Honor tokenizer end-of-turn248046 as well as configuration end 248044. Otherwise the converted model can continue after the original stops.
+- Honor tokenizer end-of-turn 248046 as well as configuration end 248044. Otherwise the converted model can continue after the original stops.
 - Keep optional vision FP32: the earlier FP16 browser comparison failed.
 - An initial Chrome run was interrupted by the development server reloading after an HTML edit. It was excluded; the recorded completed run was restarted cleanly. Keep verification pages isolated from live source edits.
 - No training was performed. The original MLX archive and failed conversion experiments remain available.
@@ -57,4 +57,15 @@ A further six Chrome text runs also compared the first generated token score wit
 
 ## Hosted model artifact
 
-Pinned model revision: `81f9f6a2591a348994e655a8ea8302c392b9dce2`. All315 uploaded file contents were verified using227 LFS SHA256 and88 Git blob hashes. The website uses this immutable revision. Public-site generation is verified separately after deployment.
+Pinned model revision: `81f9f6a2591a348994e655a8ea8302c392b9dce2`. All 315 uploaded file contents were verified using 227 LFS SHA256 and 88 Git blob hashes. The website uses this immutable revision. Public-site generation is verified separately after deployment.
+
+
+## Verified public-site execution
+
+The deployed [LlamaJEE.js subsite](https://ompatnaik.com/llamajee/) loaded the pinned hosted 9B files in Chrome with the local QA server stopped. The unchanged base and Reliable01 step 60 each completed the actual harness question `What is 2 + 3?`, emitted 98 tokens, stopped naturally, and returned 5. The live selector exposed the base, all five archived adapters and the separate 0.8B option.
+
+The first base generation took 149.8 seconds including additional embedding downloads; the adapter run took 71.1 seconds. These times exclude the initial multi-gigabyte model download and should not be confused with the shorter warmed synthetic controls above. This is a desktop proof of browser execution and checkpoint switching, not a JEE benchmark or a performance guarantee.
+
+The original Xet upload was slow and stopped without a completed commit. Standard Hugging Face LFS completed the same model upload in about 11.4 minutes. All model artifacts were preserved and verified. An automated HTTP asset check encountered a local Python CA-store error, then HTTP 403 with a proper trust bundle; normal Chrome loading and generation succeeded. TLS verification was not disabled.
+
+[Saved public base output](public-base-v1.json) · [Saved public trained output](public-reliable60-v1.json). The final display update improves the checkpoint selector styling, labels download progress per file, and hides the completed download bar. The inference worker and pinned weights are unchanged by that update.

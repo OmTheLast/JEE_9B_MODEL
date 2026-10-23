@@ -40,13 +40,10 @@ function showError(message) {
 function showProgress({ file, loaded, total }) {
   if (!file || !total) return;
   fileProgress.set(file, { loaded, total });
-  const values = [...fileProgress.values()];
-  const amount = values.reduce((n, x) => n + x.loaded, 0);
-  const size = values.reduce((n, x) => n + x.total, 0);
-  const percent = Math.min(100, Math.round(amount / size * 100));
+  const percent = Math.min(100, Math.round(loaded / total * 100));
   $('download-track').hidden = false;
   $('download-bar').style.width = `${percent}%`;
-  status(`Downloading ${file.split('/').at(-1)} · ${Math.round(loaded / 1e6)} / ${Math.round(total / 1e6)} MB`);
+  status(`Downloading ${file.split('/').at(-1)} · ${Math.round(loaded / 1e6)} / ${Math.round(total / 1e6)} MB (this file)`);
 }
 
 function createWorker() {
@@ -71,6 +68,7 @@ worker.addEventListener('message', ({ data }) => {
   }
   if (data.type === 'complete') {
     solving = false;
+    $('download-track').hidden = true;
     const raw = data.text || streamed;
     if (data.generatedIds) $('output-model').textContent += ` · ${data.generatedIds.length} tokens · ${data.seconds.toFixed(1)} s · stop: ${data.stopReason}`;
     $('raw-output').textContent = raw;
