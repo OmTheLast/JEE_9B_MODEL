@@ -1,0 +1,20 @@
+{
+  "source": "https://github.com/OmTheLast/LlamaJEE.js",
+  "canonical": "https://ompatnaik.com/llamajee/",
+  "model_repo": "OmTheLast/LlamaJEE-9B-ONNX-WebGPU",
+  "model_revision": "81f9f6a2591a348994e655a8ea8302c392b9dce2",
+  "runtime": "custom ONNX Runtime WebGPU + Transformers.js tokenizer",
+  "archived_adapters": 5,
+  "scope": "Experimental; synthetic conversion checks, not JEE accuracy",
+  "sha256": {
+    "index.html": "62b6d4f83a4ad9b6882dcf16d057f22c6af4e6cc84714a1df3f46f9e8258eaeb",
+    "CNAME": "2d74ed339bb980fadd119f2109b74160733f7fb606fcce514ed2cb2a74d1e219",
+    ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "charts/training_trajectories.png": "8d2f197f6a463544afe174e762f574efc01af697a1f1449c0f54f6a49f38f1f4",
+    "charts/latest_tradeoffs.png": "2d66d376d1d31df5af472b81bcf3e3f70b0d99192280c4943a1241b9026befb1",
+    "assets/index-7g9vbL4s.css": "81e35a82dae48939150074bf917d7544854170db3a503b4c9f21c703fcbad46b",
+    "assets/ort-wasm-simd-threaded.asyncify-CxOG5pUO.wasm": "49871f5a4409519797e127440868a6d1923339d9185907f301a5b2a1d90af082",
+    "assets/index-Ckd-GXtD.js": "7e9fa014be80579ce3a12e6270cc0b8c1a5d5785917e544579ecf13115f618a3",
+    "assets/model.worker-9Xeh-nL4.js": "9a12e803e9238f0c438b3ce461cdd002ab77f519ebc59a8aa56e660b86c048c1"
+  }
+}

@@ -16,21 +16,25 @@ A browser-first JEE solver project by Om Patnaik, with a preserved record of its
 
 **Inspect five MLX LoRA adapters, their tradeoffs against the unchanged 9B base, and the gates that kept them experimental.**
 
-[Original 9B lab setup](local_lab/README.md#run-it) · [Separate 0.8B browser demo](https://ompatnaik.com/llamajee/) · [Archived 9B adapters](https://huggingface.co/OmTheLast/jee-solver-experimental-mlx-adapters)
+[Original 9B lab setup](local_lab/README.md#run-it) · [Public browser solver: 9B + 0.8B](https://ompatnaik.com/llamajee/) · [Archived 9B adapters](https://huggingface.co/OmTheLast/jee-solver-experimental-mlx-adapters)
 
-Apple Silicon + MLX for 9B inference. Browser preview runs a separate unchanged 0.8B model. Private questions and optimizer state are not published.
+The browser runtime supports our original 9B base and five archived adapters, plus a separate unchanged 0.8B option. The original Apple Silicon / MLX harness remains available locally. Private questions and optimizer state are not published.
 
 By Om Patnaik · repository created September 2026.
 
 ## Latest conversion milestone
 
-[Actual 9B browser prototype and failed image checks](research/EXPORT09B02_BROWSER_PROTOTYPE.md): one trained checkpoint now completes a synthetic text question in Chrome, with exact CPU/browser token agreement. This prototype has not replaced the public 0.8B demo.
-
-[Image diagnosis and original-weight conversion](research/EXPORT09B03_IMAGE_DIAGNOSTICS.md): two-image controls narrow the discrepancy; preserving original MLX compressed weights and a separate adapter passes one real projection in Chrome. Full-model conversion and public checkpoint selection remain unfinished.
+[Original 9B browser conversion](research/EXPORT09B04_ORIGINAL_BROWSER_RELEASE.md): preserving original MLX compressed weights and separate adapters passed 18 complete CPU and 10 Chrome synthetic comparisons. These checks include the original model's image mistakes; they are not a JEE accuracy benchmark. [Earlier prototype](research/EXPORT09B02_BROWSER_PROTOTYPE.md) and [image diagnosis](research/EXPORT09B03_IMAGE_DIAGNOSTICS.md) remain in the history.
 
 ## Public browser deployment
 
-The requested public address is [ompatnaik.com/llamajee/](https://ompatnaik.com/llamajee/). The current browser demo computes on the visitor’s device without an inference API. **The trained 9B browser export is still pending**; read the [dated deployment and export status](research/BROWSER_DEPLOYMENT_STATUS_2026_10_23.md). The local links below preserve the earlier development harness.
+[Open LlamaJEE.js at ompatnaik.com/llamajee/](https://ompatnaik.com/llamajee/).
+
+Select the unchanged 9B base, one of five experimental snapshots, or the separate 0.8B demo. Models compute on your device; no account, inference API, or local server is needed. The 9B package uses our custom ONNX Runtime WebGPU engine and a Transformers.js tokenizer; it is not a standard Transformers.js model loader.
+
+**Desktop experimental preview:** up to 5.7 GB of text weights/adapters, plus 1.84 GB for images. Tested on a 64 GiB Mac; phones and minimum-memory requirements are unverified. Screenshot recognition remains unreliable. No trained checkpoint has been promoted as a generally better JEE solver.
+
+[Browser weights and verification](https://huggingface.co/OmTheLast/LlamaJEE-9B-ONNX-WebGPU) · [Browser source](web/) · [Original adapter archive](https://huggingface.co/OmTheLast/jee-solver-experimental-mlx-adapters).
 
 ## Open the original 9B models
 
@@ -43,13 +47,13 @@ The original browser interface uses **browser → local Python server → MLX 9B
 
 Both interfaces offer the unchanged Qwen3.5-9B base and three experimental step-60 adapters: **30 families / 3 layers**, **30 families / 16 layers**, and **60 families / 3 layers**. Five adapter checkpoints are archived in this repository; three are selectable in the interface.
 
-These `127.0.0.1` links connect to **the computer where you open them** and require its local server to be running. GitHub does not host a public 9B inference server. The [public Transformers.js demo](https://ompatnaik.com/llamajee/) runs the separate unchanged **0.8B ONNX** model inside the browser. Our original 9B lab uses **MLX weights and adapters**.
+These `127.0.0.1` links connect to **the computer where you open them** and require its local server to be running. GitHub does not host a public 9B inference server. The public site now uses converted ONNX graphs for the original 9B base and all five archived adapters, with the separate 0.8B option retained. Our original local 9B lab uses MLX weights and adapters.
 
 ## Install
 
 | Platform / path | Start here |
 | --- | --- |
-| Browser preview | [Try the unchanged 0.8B preview](https://ompatnaik.com/llamajee/) |
+| Browser preview | [Try the 9B archive or 0.8B preview](https://ompatnaik.com/llamajee/) |
 | Local 9B lab | Follow [local setup](local_lab/README.md) for the pinned base and compatible MLX stack |
 
 Start with `history.csv` and the chart notes without downloading weights. To inspect a 9B adapter, use `load_mlx.py` after installing the compatible stack; it downloads the pinned base separately. None of the latest adapters was promoted as a better solver.
@@ -72,7 +76,7 @@ Rebuild with `python charts/make_charts.py`. [Raw history](history.csv) · [Char
 
 ## Choose the correct runtime
 
-The MLX adapters are project-specific artifacts rather than standalone or standard PEFT models. The local lab records private attempts; the WebGPU demo uses no 9B adapter weights.
+The original MLX adapters are project-specific artifacts. The browser package preserves their matrices as explicit inputs to custom ONNX graphs; it does not load MLX files directly. The local lab retains local attempt history; the public browser works on the visitor's device.
 
 ## Inspect the next research gate
 
@@ -101,6 +105,6 @@ Install the pinned `local_lab/requirements.txt` before running the lab tests; th
 
 ## Credits, license and pointers
 
-Built on Qwen3.5-9B, its MLX community quantization, MLX/MLX-VLM, and Transformers.js for the separate preview. Research by Om Patnaik with recorded machine-review assistance. Apache-2.0 is declared in the original model metadata; see [the preserved model card](README-DETAILS.md) and upstream terms.
+Built on Qwen3.5-9B, its MLX community quantization, MLX/MLX-VLM, ONNX Runtime WebGPU, and Transformers.js. Research by Om Patnaik with recorded machine-review assistance. Apache-2.0 is declared in the original model metadata; see [the preserved model card](README-DETAILS.md) and upstream terms.
 
 [Full setup, original notes, and project history](README-DETAILS.md).

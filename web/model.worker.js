@@ -1,3 +1,5 @@
+import { Original9B } from './original9b.js';
+import { ARCHIVE_ROOT } from './archive-config.js';
 import { AutoProcessor, Qwen3_5ForConditionalGeneration, RawImage, TextStreamer } from '@huggingface/transformers';
 import { MODEL_ID, MODEL_REVISION } from './harness.js';
 
@@ -5,6 +7,7 @@ let processor;
 let model;
 let loading;
 let busy = false;
+let archive;
 
 async function ensureModel() {
   if (model && processor) return;
@@ -61,7 +64,14 @@ self.onmessage = async ({ data }) => {
   if (busy) { self.postMessage({ type: 'error', message: 'A model operation is already running.' }); return; }
   busy = true;
   try {
-    if (data.type === 'load') await ensureModel();
+    if (data.checkpoint !== 'demo') {
+      if (!ARCHIVE_ROOT) throw new Error('The 9B release URL has not been configured.');
+      archive ||= new Original9B(ARCHIVE_ROOT, (message) => self.postMessage(message));
+      await archive.load();
+      await archive.adapter(data.checkpoint || 'base');
+      if (data.type === 'load') self.postMessage({ type: 'ready' });
+      else if (data.type === 'solve') self.postMessage({ type: 'complete', ...await archive.solve(data) });
+    } else if (data.type === 'load') await ensureModel();
     else if (data.type === 'solve') await solve(data);
   } catch (error) {
     self.postMessage({ type: 'error', message: String(error?.message || error) });

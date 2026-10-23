@@ -4,3 +4,5 @@ __pycache__/
 web/.smoke/
 web/node_modules/
 web/dist/
+
+web/node_modules

@@ -1,3 +1,5 @@
+> Update: the later [original-weight browser release](EXPORT09B04_ORIGINAL_BROWSER_RELEASE.md) supersedes the pending-conversion status below. This earlier record is retained for chronology.
+
 # Public browser deployment status — 23 October 2026
 
 **Latest diagnostic:** [Two-image investigation and original-weight browser proof](EXPORT09B03_IMAGE_DIAGNOSTICS.md). No public model replacement; complete conversion is still pending.
