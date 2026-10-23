@@ -17,3 +17,7 @@ npm run dev
 Open the local URL printed by Vite. A WebGPU-capable browser is required. Model loading starts only after clicking **Load model locally**. The static `dist/` folder can be hosted on GitHub Pages or Cloudflare Pages; use the built assets rather than source files. The currently bundled ONNX WASM asset is larger than Cloudflare Pages' 25 MiB single-file limit, so a Pages deployment needs a different WASM delivery path. The intended custom domain also requires DNS/hosting configuration.
 
 Model: [ONNX Qwen3.5 0.8B](https://huggingface.co/onnx-community/Qwen3.5-0.8B-ONNX), pinned revision `c0d619322dad7c4441a8841a53fc59772ddddcc0`. Research archive: [JEE_9B_MODEL](https://github.com/OmTheLast/JEE_9B_MODEL). No JEE question corpus, gold answers, private review data or local user interactions are bundled in this website.
+
+## Public subsite
+
+The canonical URL is https://ompatnaik.com/llamajee/. Deployment lives in `OmTheLast/omthelast.github.io`, under `llamajee/`. Build this app, then copy `dist/index.html`, `dist/assets/` and `dist/charts/` into that directory. Do not copy the demo subdomain’s `CNAME` into the portfolio or replace its root files. Vite uses a relative base, so worker, WASM, CSS and chart URLs resolve within the subsite. `docs/` remains the archived standalone build; its CNAME retains the earlier working subdomain as an alternate address.
